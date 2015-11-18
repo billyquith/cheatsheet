@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>Cheatsheet</title>
+<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="jquery-sortable-lists.min.js"></script>
+<link rel="stylesheet" type="text/css" href="cheatsheet.css">
+</head>
+
+<body>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+ //$("#msgid").html("This is Hello World by JQuery");
+    var options = {
+        opener: {
+			 active: true,
+			 close: './imgs/Remove2.png',
+			 open: './imgs/Add2.png',
+			 openerCss: {
+				 'display': 'inline-block',
+				 'width': '18px',
+				 'height': '18px',
+				 'float': 'left',
+				 'margin-left': '-35px',
+				 'margin-right': '5px',
+				 'background-position': 'center center',
+				 'background-repeat': 'no-repeat'
+			 },
+			 openerClass: ''
+		}
+    };
+ 
+    $("#infoList1").sortableLists(options);
+});
+
+</script>
+
+Cheatsheet for Foo
+
+<!--div id="msgid">
+</div-->
+
+<ul class="cheatInfo listsClass" id="infoList1">
+    <li><div>Section A</div>
+        <ul>
+            <li><div>Item 1</div></li>
+            <li><div>Item 1</div></li>
+            <li><div>Item 1</div></li>
+            <li><div>Item 1</div></li>
+            <li><div>Item 1</div></li>
+        </ul>
+    </li>
+    <li>Section B</li>
+    <li>Section C</li>
+</ul>
+
+</body>
+</html>
