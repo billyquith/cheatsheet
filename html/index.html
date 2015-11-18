@@ -3,7 +3,8 @@
 <title>Cheatsheet</title>
 <script type="text/javascript" src="jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="jquery-sortable-lists.min.js"></script>
-<script type="text/javascript" src="js-yaml.min.js"></script>
+<!-- script type="text/javascript" src="js-yaml.min.js"></script -->
+<script type="text/javascript" src="marked.min.js"></script>
 <link rel="stylesheet" type="text/css" href="cheatsheet.css">
 </head>
 
@@ -11,35 +12,46 @@
 
 <script type="text/javascript">
     
-function makeUl(list) {
-    var ul = $('<ul/>');
-    $.each(list, function(i) {
-        var item = $('<div/>').html(list[i]);
-        var li = $('<li/>').append(item).appendTo(ul);
-    });
-    return ul;
-}
+//function makeUl(list) {
+//    var ul = $('<ul/>');
+//    $.each(list, function(i) {
+//        var item = $('<div/>').html(list[i]);
+//        var li = $('<li/>').append(item).appendTo(ul);
+//    });
+//    return ul;
+//}
 
-function makeNotes(nlist) { // [ { 'note':<string>, 'comment':<string> }, ... ]
-    var ul = $('<ul/>');
-    $.each(nlist, function(i) {
-        var n = nlist[i];
-        var note = $('<b/>').append(n['note'] + ' : ' + n['comment']);
-        var item = $('<div/>').html(note);
-        var li = $('<li/>').append(item).appendTo(ul);
-    });
-    return ul;
-}
+//function makeNotes(nlist) { // [ { 'note':<string>, 'comment':<string> }, ... ]
+//    var ul = $('<ul/>');
+//    $.each(nlist, function(i) {
+//        var n = nlist[i];
+//        var note = $('<b/>').append(n['note'] + ' : ' + n['comment']);
+//        var item = $('<div/>').html(note);
+//        var li = $('<li/>').append(item).appendTo(ul);
+//    });
+//    return ul;
+//}
+//
+//function makeSections(doc) {  // [ sections ... ]
+//	var slist = doc['sections'];
+//    var ul = $('<ul/>');
+//    $.each(slist, function(i) {
+//        var sect = slist[i];
+//        var sitem = $('<div/>').text(sect);
+//        var items = makeNotes(sect['items']);
+//        var li = $('<li/>').append(sitem).append(items).appendTo(ul);        
+//    });    
+//    return ul.addClass('cheatInfo listsClass');
+//}
 
-function makeSections(slist) {  // [ sections ... ]
-    var ul = $('<ul/>');
-    $.each(slist, function(i) {
-        var sect = slist[i];
-        var sitem = $('<div/>').text(sect['section']);
-        var items = makeNotes(sect['items']);
-        var li = $('<li/>').append(sitem).append(items).appendTo(ul);        
-    });    
-    return ul.addClass('cheatInfo listsClass');
+function convertDoc(doc) {    
+	$('#placeholder h2').each(function (i) {
+		$(this).replaceWith(
+			$('<li/>')
+				.append($('<div/>').append($(this).text()))
+				.append($(this).next()));
+	});	
+	$('#placeholder > li').wrapAll('<ul class="cheatInfo listsClass" id="cheatsheet"></ul>');
 }
 
 $(document).ready(function(){
@@ -62,47 +74,24 @@ $(document).ready(function(){
 			 openerClass: ''
 		}
     };
-    
-    var data = {
-        'sections': [
-            {
-                'section': 'Ice cream',
-                'items': [
-                    { 'note' : 'vanilla', 'comment':'tasty!' },
-                    { 'note' : 'chocolate', 'comment':'tasty!' },
-                    { 'note' : 'raspberry ripple', 'comment':'tasty!' },
-                ]
-            },{
-                'section': 'Animals',
-                'items': [
-                    { 'note' : 'dog', 'comment':'tasty!' },
-                    { 'note' : 'cat', 'comment':'tasty!' },
-                    { 'note' : 'walrus', 'comment':'tasty!' },
-                ]
-            }
-        ]
-    };    
-    //$('#infoHolder').append(makeSections(data['sections']));
-    
-    var cheatFileUrl = 'sheets/test.yaml';    
+	
+	var cheatFileUrl = 'sheets/test.md';    
     try {
         $.get(cheatFileUrl, function(data) {
-            var doc = jsyaml.safeLoad(data);
-            console.log(doc);
-            makeSections(doc);
+            var doc = marked(data);
+			$('#placeholder').append(doc);
+			convertDoc(doc);
         });    
     } catch (e) {
         console.log(e);
     }
     
-    $("#infoHolder").sortableLists(options);
+    $("#cheatsheet").sortableLists(options);
 });
 
 </script>
 
-Cheatsheet for Foo
-
-<div id="infoHolder"></div>
+<div id="placeholder"></div>
 
 </body>
 </html>
