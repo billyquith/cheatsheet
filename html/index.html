@@ -3,6 +3,7 @@
 <title>Cheatsheet</title>
 <script type="text/javascript" src="jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="jquery-sortable-lists.min.js"></script>
+<script type="text/javascript" src="js-yaml.min.js"></script>
 <link rel="stylesheet" type="text/css" href="cheatsheet.css">
 </head>
 
@@ -80,9 +81,20 @@ $(document).ready(function(){
                 ]
             }
         ]
-    };
+    };    
+    //$('#infoHolder').append(makeSections(data['sections']));
     
-    $('#infoHolder').append(makeSections(data['sections']));
+    var cheatFileUrl = 'sheets/test.yaml';    
+    try {
+        $.get(cheatFileUrl, function(data) {
+            var doc = jsyaml.safeLoad(data);
+            console.log(doc);
+            makeSections(doc);
+        });    
+    } catch (e) {
+        console.log(e);
+    }
+    
     $("#infoHolder").sortableLists(options);
 });
 
