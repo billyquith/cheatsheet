@@ -1,7 +1,7 @@
 
 html, body, ul, li { margin:0; padding:0; }
-ul, li { list-style-type:none; color:#b5e853; border:1px solid #3f3f3f; }
-ul.cheatInfo li, ul#sortableListsBase li { padding-left:50px; margin:5px; border:1px solid #3f3f3f; background-color:#3f3f3f; }
+ul, li { list-style-type:none; color:#b5e853; border:1px solid #555; }
+ul.cheatInfo li, ul#sortableListsBase li { padding-left:50px; margin:5px; border:1px solid #777; background-color:#3f3f3f; }
 li div { padding:7px; background-color:#222; border:1px solid #3f3f3f; }
 li, ul, div { border-radius: 3px; }
 

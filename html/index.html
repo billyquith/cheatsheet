@@ -9,9 +9,40 @@
 <body>
 
 <script type="text/javascript">
+    
+function makeUl(list) {
+    var ul = $('<ul/>');
+    $.each(list, function(i) {
+        var item = $('<div/>').html(list[i]);
+        var li = $('<li/>').append(item).appendTo(ul);
+    });
+    return ul;
+}
+
+function makeNotes(nlist) { // [ { 'note':<string>, 'comment':<string> }, ... ]
+    var ul = $('<ul/>');
+    $.each(nlist, function(i) {
+        var n = nlist[i];
+        var note = $('<b/>').append(n['note'] + ' : ' + n['comment']);
+        var item = $('<div/>').html(note);
+        var li = $('<li/>').append(item).appendTo(ul);
+    });
+    return ul;
+}
+
+function makeSections(slist) {  // [ sections ... ]
+    var ul = $('<ul/>');
+    $.each(slist, function(i) {
+        var sect = slist[i];
+        var sitem = $('<div/>').text(sect['section']);
+        var items = makeNotes(sect['items']);
+        var li = $('<li/>').append(sitem).append(items).appendTo(ul);        
+    });    
+    return ul.addClass('cheatInfo listsClass');
+}
 
 $(document).ready(function(){
- //$("#msgid").html("This is Hello World by JQuery");
+
     var options = {
         opener: {
 			 active: true,
@@ -30,30 +61,36 @@ $(document).ready(function(){
 			 openerClass: ''
 		}
     };
- 
-    $("#infoList1").sortableLists(options);
+    
+    var data = {
+        'sections': [
+            {
+                'section': 'Ice cream',
+                'items': [
+                    { 'note' : 'vanilla', 'comment':'tasty!' },
+                    { 'note' : 'chocolate', 'comment':'tasty!' },
+                    { 'note' : 'raspberry ripple', 'comment':'tasty!' },
+                ]
+            },{
+                'section': 'Animals',
+                'items': [
+                    { 'note' : 'dog', 'comment':'tasty!' },
+                    { 'note' : 'cat', 'comment':'tasty!' },
+                    { 'note' : 'walrus', 'comment':'tasty!' },
+                ]
+            }
+        ]
+    };
+    
+    $('#infoHolder').append(makeSections(data['sections']));
+    $("#infoHolder").sortableLists(options);
 });
 
 </script>
 
 Cheatsheet for Foo
 
-<!--div id="msgid">
-</div-->
-
-<ul class="cheatInfo listsClass" id="infoList1">
-    <li><div>Section A</div>
-        <ul>
-            <li><div>Item 1</div></li>
-            <li><div>Item 1</div></li>
-            <li><div>Item 1</div></li>
-            <li><div>Item 1</div></li>
-            <li><div>Item 1</div></li>
-        </ul>
-    </li>
-    <li>Section B</li>
-    <li>Section C</li>
-</ul>
+<div id="infoHolder"></div>
 
 </body>
 </html>
