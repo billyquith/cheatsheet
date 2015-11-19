@@ -62,7 +62,8 @@ genApacheConf(){
  fi
  host_root="${APACHE_HOME_DIR}$1/$2/$(title)"
  echo -e "# Host $1/$2 :"
-}```
+}
+```
 
 ```python
 @requires_authorization
@@ -76,7 +77,8 @@ class SomeClass:
     pass
 
 >>> message = '''interpreter
-... prompt'''```
+... prompt'''
+```
 
 ```lua
 --[[
