@@ -76,23 +76,28 @@
         }
         return null;
     }
-    
-    function transformDoc() {      
+
+    function transformDoc() {
+      
+      $('#sheetmarked h2').each(function(){
+         $(this).nextUntil('h2').wrapAll('<div></div>');      
+      });
+      
       // set title
       $('.navbar-brand').empty(); $('.navbar-brand').append('Cheatsheet: ' +
       $('#sheetmarked h1').text());
 
       // don't need cheatsheet title
       $('#sheetmarked h1').remove();
-      
+
       // table markup
       $('#sheetmarked table').addClass('table table-striped');
-      
+
       $('#sheetmarked a').filter(function() {
           return this.hostname != window.location.hostname;
       }).attr('target', '_blank');
     }
-    
+
     function showSectionChoice() {
       $('#sheetmarked h2').filter(function() {
         if ($(this).text() == g_sectchoice) {
@@ -107,7 +112,7 @@
       $('#sheetinfo').empty();
       $('#sheetmarked').children().clone().appendTo('#sheetinfo');
     }
-    
+
     function updateView() {
       if (g_viewchoice == 'all') {
         $('.sidebar').hide();
@@ -118,7 +123,7 @@
         showSectionChoice();
       }
     }
-    
+
     $(document).ready(function()
     {
       var options = {
@@ -139,7 +144,7 @@
                openerClass: ''
           }
       };
-              
+
       // select a view
       $('#navbar a').click(function (){
         $(this).parent().siblings().removeClass('active');
@@ -147,7 +152,7 @@
         g_viewchoice = $(this).text();
         updateView();
       });
-      
+
       var cheatFileUrl = getURLParam('sheet') || 'eg';
       cheatFileUrl = '../sheets/' + cheatFileUrl + '.md';
       try {
@@ -156,7 +161,7 @@
           var doc = marked(data);
           $('#sheetmarked').append(doc);
           transformDoc();
-          
+
           // populate sidebar
           $('#sheetmarked h2').each(function() {
             $('#cheatsections').append('<li><a href="#">' + $(this).text() + '</a></li>');
@@ -172,13 +177,13 @@
           // default view
           g_viewchoice = 'sections';
           $("#viewchoice li").first().addClass('active');
-          
+
           // select first section by default
           g_sectchoice = $('#sheetmarked h2').first().text();
           $('#cheatsections li').first().addClass('active');
 
           updateView();
-        });    
+        });
       } catch (e) {
         console.log(e);
       }
