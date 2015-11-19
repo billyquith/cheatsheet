@@ -39,7 +39,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right" id="viewchoice">
             <li><a href="#">all</a></li>
-            <li><a href="#">sections</a></li>
+            <li><a href="#">sections</a></li>            
           </ul>
           <!--<form class="navbar-form navbar-right">-->
           <!--  <input type="text" class="form-control" placeholder="Search...">-->
@@ -54,8 +54,6 @@
           <ul class="nav nav-sidebar" id="cheatsections">
             <!--<li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>-->
             <!--<li><a href="#">Reports</a></li>-->
-            <!--<li><a href="#">Analytics</a></li>-->
-            <!--<li><a href="#">Export</a></li>-->
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -113,9 +111,11 @@
     
     function updateView() {
         if (g_viewchoice == 'all') {
+            $('.sidebar').hide();
             showAllSections();
         }
         else {
+            $('.sidebar:hidden').show();
             showSectionChoice();
         }
     }
@@ -146,8 +146,7 @@
             updateView();
         });
         
-        var cheatFileUrl = getURLParam('sheet') || 'test';
-        //var cheatFileUrl = '../sheets/test.md';
+        var cheatFileUrl = getURLParam('sheet') || 'eg';
         cheatFileUrl = '../sheets/' + cheatFileUrl + '.md';
         try {
             console.log('requesting: ' + cheatFileUrl);
@@ -164,6 +163,7 @@
                     g_sectchoice = $(this).text();
                     updateView();
                 });
+                g_sectchoice = $('#sheetmarked h2').first().text();
 
                 updateView();
             });    
