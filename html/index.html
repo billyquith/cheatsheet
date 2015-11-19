@@ -21,37 +21,14 @@
 //    return ul;
 //}
 
-//function makeNotes(nlist) { // [ { 'note':<string>, 'comment':<string> }, ... ]
-//    var ul = $('<ul/>');
-//    $.each(nlist, function(i) {
-//        var n = nlist[i];
-//        var note = $('<b/>').append(n['note'] + ' : ' + n['comment']);
-//        var item = $('<div/>').html(note);
-//        var li = $('<li/>').append(item).appendTo(ul);
-//    });
-//    return ul;
-//}
-//
-//function makeSections(doc) {  // [ sections ... ]
-//	var slist = doc['sections'];
-//    var ul = $('<ul/>');
-//    $.each(slist, function(i) {
-//        var sect = slist[i];
-//        var sitem = $('<div/>').text(sect);
-//        var items = makeNotes(sect['items']);
-//        var li = $('<li/>').append(sitem).append(items).appendTo(ul);        
-//    });    
-//    return ul.addClass('cheatInfo listsClass');
-//}
-
-function convertDoc(doc) {    
+function transformDOc(doc) {    
 	$('#placeholder h2').each(function (i) {
 		$(this).replaceWith(
 			$('<li/>')
 				.append($('<div/>').append($(this).text()))
 				.append($(this).next()));
 	});	
-	$('#placeholder > li').wrapAll('<ul class="cheatInfo listsClass" id="cheatsheet"></ul>');
+	$('#placeholder > li').wrapAll('<ul class="cheatsheet listsClass"></ul>');
 }
 
 $(document).ready(function(){
@@ -80,13 +57,12 @@ $(document).ready(function(){
         $.get(cheatFileUrl, function(data) {
             var doc = marked(data);
 			$('#placeholder').append(doc);
-			convertDoc(doc);
+			transformDOc(doc);
+            $(".cheatsheet").sortableLists(options);
         });    
     } catch (e) {
         console.log(e);
     }
-    
-    $("#cheatsheet").sortableLists(options);
 });
 
 </script>
