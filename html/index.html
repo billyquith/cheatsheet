@@ -66,6 +66,7 @@
     var g_viewchoice = null;
     var g_sectchoice = null;
 
+    // get URL param by name
     function getURLParam(name) {
         var url = window.location.search.substring(1);
         var urlVars = url.split('&');
@@ -94,6 +95,7 @@
       // table markup
       $('#sheetmarked table').addClass('table table-striped');
 
+      // open external links in a new tab
       $('#sheetmarked a').filter(function() {
           return this.hostname != window.location.hostname;
       }).attr('target', '_blank');
@@ -146,6 +148,7 @@
           }
       };
       
+      // use highlight.js to do the code syntax highlighting
       marked.setOptions({
         highlight: function (code, lang) {
           return hljs.highlightAuto(code).value;
