@@ -11,28 +11,33 @@
 <body>
 
 <script type="text/javascript">
-    
-//function makeUl(list) {
-//    var ul = $('<ul/>');
-//    $.each(list, function(i) {
-//        var item = $('<div/>').html(list[i]);
-//        var li = $('<li/>').append(item).appendTo(ul);
-//    });
-//    return ul;
-//}
 
-function transformDOc(doc) {    
+function getURLParam(name) {
+    var url = window.location.search.substring(1);
+    var urlVars = url.split('&');
+    for (var i=0; i < urlVars.length; i++) {
+        var kv = urlVars[i].split('=');
+        if (kv[0] == name) {
+            return kv[1];
+        }
+    }
+    return null;
+}
+
+function transformDoc() {
+    // turn each sub-section (h2) into a list item
 	$('#placeholder h2').each(function (i) {
 		$(this).replaceWith(
 			$('<li/>')
 				.append($('<div/>').append($(this).text()))
 				.append($(this).next()));
-	});	
+	});
+    // wrap the list items in a list
 	$('#placeholder > li').wrapAll('<ul class="cheatsheet listsClass"></ul>');
 }
 
-$(document).ready(function(){
-
+$(document).ready(function()
+{
     var options = {
         opener: {
 			 active: true,
@@ -52,12 +57,15 @@ $(document).ready(function(){
 		}
     };
 	
-	var cheatFileUrl = 'sheets/test.md';    
+    var cheatFileUrl = getURLParam('sheet') || 'test';
+	//var cheatFileUrl = '../sheets/test.md';
+    cheatFileUrl = '../sheets/' + cheatFileUrl + '.md';
     try {
+        console.log('requesting: ' + cheatFileUrl);
         $.get(cheatFileUrl, function(data) {
             var doc = marked(data);
 			$('#placeholder').append(doc);
-			transformDOc(doc);
+			transformDoc();
             $(".cheatsheet").sortableLists(options);
         });    
     } catch (e) {
