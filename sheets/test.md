@@ -1,15 +1,21 @@
 
-Stuff
-=====
+Test Cheatsheet
+===============
 
-Section 1
----------
-- blah blah blah blah blah blah blah blah
-- `int itCode()`
-- `variable` weather
+Formatting
+----------
+- Some useful information.
+- `int itCode();` in here.
+- <kbd>Ctrl</kbd> + <kbd>A</kbd> is for 'orses.
 
-Section 2
----------
+Tables
+------
+
+Country | Size | Food
+------- | ---- | ----
+UK | small | chips
+US | big | burgers
+France | medium | cheese
 
 
 Section 3

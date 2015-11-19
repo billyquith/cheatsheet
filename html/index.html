@@ -22,7 +22,9 @@
   </head>
 
   <body>
-
+    
+    <div style="display: none" id="sheetmarked"></div>
+    
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -32,18 +34,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">Cheatsheet</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
+          <ul class="nav navbar-nav navbar-right" id="viewchoice">
+            <li><a href="#">all</a></li>
+            <li><a href="#">sections</a></li>
           </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-          </form>
+          <!--<form class="navbar-form navbar-right">-->
+          <!--  <input type="text" class="form-control" placeholder="Search...">-->
+          <!--</form>-->
         </div>
       </div>
     </nav>
@@ -51,179 +51,15 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Reports</a></li>
-            <li><a href="#">Analytics</a></li>
-            <li><a href="#">Export</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item</a></li>
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-            <li><a href="">More navigation</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
+          <ul class="nav nav-sidebar" id="cheatsections">
+            <!--<li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>-->
+            <!--<li><a href="#">Reports</a></li>-->
+            <!--<li><a href="#">Analytics</a></li>-->
+            <!--<li><a href="#">Export</a></li>-->
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
-
-          <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-          </div>
-
-          <h2 class="sub-header">Section title</h2>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
-                </tr>
-                <tr>
-                  <td>1,002</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
-                  <td>adipiscing</td>
-                  <td>elit</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>Integer</td>
-                  <td>nec</td>
-                  <td>odio</td>
-                  <td>Praesent</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>libero</td>
-                  <td>Sed</td>
-                  <td>cursus</td>
-                  <td>ante</td>
-                </tr>
-                <tr>
-                  <td>1,004</td>
-                  <td>dapibus</td>
-                  <td>diam</td>
-                  <td>Sed</td>
-                  <td>nisi</td>
-                </tr>
-                <tr>
-                  <td>1,005</td>
-                  <td>Nulla</td>
-                  <td>quis</td>
-                  <td>sem</td>
-                  <td>at</td>
-                </tr>
-                <tr>
-                  <td>1,006</td>
-                  <td>nibh</td>
-                  <td>elementum</td>
-                  <td>imperdiet</td>
-                  <td>Duis</td>
-                </tr>
-                <tr>
-                  <td>1,007</td>
-                  <td>sagittis</td>
-                  <td>ipsum</td>
-                  <td>Praesent</td>
-                  <td>mauris</td>
-                </tr>
-                <tr>
-                  <td>1,008</td>
-                  <td>Fusce</td>
-                  <td>nec</td>
-                  <td>tellus</td>
-                  <td>sed</td>
-                </tr>
-                <tr>
-                  <td>1,009</td>
-                  <td>augue</td>
-                  <td>semper</td>
-                  <td>porta</td>
-                  <td>Mauris</td>
-                </tr>
-                <tr>
-                  <td>1,010</td>
-                  <td>massa</td>
-                  <td>Vestibulum</td>
-                  <td>lacinia</td>
-                  <td>arcu</td>
-                </tr>
-                <tr>
-                  <td>1,011</td>
-                  <td>eget</td>
-                  <td>nulla</td>
-                  <td>Class</td>
-                  <td>aptent</td>
-                </tr>
-                <tr>
-                  <td>1,012</td>
-                  <td>taciti</td>
-                  <td>sociosqu</td>
-                  <td>ad</td>
-                  <td>litora</td>
-                </tr>
-                <tr>
-                  <td>1,013</td>
-                  <td>torquent</td>
-                  <td>per</td>
-                  <td>conubia</td>
-                  <td>nostra</td>
-                </tr>
-                <tr>
-                  <td>1,014</td>
-                  <td>per</td>
-                  <td>inceptos</td>
-                  <td>himenaeos</td>
-                  <td>Curabitur</td>
-                </tr>
-                <tr>
-                  <td>1,015</td>
-                  <td>sodales</td>
-                  <td>ligula</td>
-                  <td>in</td>
-                  <td>libero</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+            <div id="sheetinfo"></div>
         </div>
       </div>
     </div>
@@ -231,6 +67,112 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="jquery.min.js"></script>
     <script src="bootstrap.min.js"></script>
+    <script src="marked.min.js"></script>
+    
+    <script type="text/javascript">
+    
+    var g_viewchoice = 'all';
+    var g_sectchoice = null;
+
+    function getURLParam(name) {
+        var url = window.location.search.substring(1);
+        var urlVars = url.split('&');
+        for (var i=0; i < urlVars.length; i++) {
+            var kv = urlVars[i].split('=');
+            if (kv[0] == name) {
+                return kv[1];
+            }
+        }
+        return null;
+    }
+    
+    function transformDoc() {
+        // set title
+        $('.navbar-brand').empty();
+        $('.navbar-brand').append('Cheatsheet: ' + $('#sheetmarked h1').text());
+        
+        // don't need cheatsheet title
+        $('#sheetmarked h1').remove();
+        
+        // table markup
+        $('#sheetmarked table').addClass('table table-striped');
+    }
+    
+    function showSectionChoice() {
+        $('#sheetmarked h2').filter(function() {
+            if ($(this).text() == g_sectchoice) {
+                $('#sheetinfo').empty();
+                $(this).next().clone().appendTo('#sheetinfo');
+            }
+        });
+    }    
+    function showAllSections() {
+        $('#sheetinfo').empty();
+        $('#sheetmarked').children().clone().appendTo('#sheetinfo');
+    }
+    
+    function updateView() {
+        if (g_viewchoice == 'all') {
+            showAllSections();
+        }
+        else {
+            showSectionChoice();
+        }
+    }
+    
+    $(document).ready(function()
+    {
+        var options = {
+            opener: {
+                 active: true,
+                 close: './imgs/Remove2.png',
+                 open: './imgs/Add2.png',
+                 openerCss: {
+                     'display': 'inline-block',
+                     'width': '18px',
+                     'height': '18px',
+                     'float': 'left',
+                     'margin-left': '-35px',
+                     'margin-right': '5px',
+                     'background-position': 'center center',
+                     'background-repeat': 'no-repeat'
+                 },
+                 openerClass: ''
+            }
+        };
+                
+        $('#navbar a').click(function (){
+            g_viewchoice = $(this).text();
+            updateView();
+        });
+        
+        var cheatFileUrl = getURLParam('sheet') || 'test';
+        //var cheatFileUrl = '../sheets/test.md';
+        cheatFileUrl = '../sheets/' + cheatFileUrl + '.md';
+        try {
+            console.log('requesting: ' + cheatFileUrl);
+            $.get(cheatFileUrl, function(data) {
+                var doc = marked(data);
+                $('#sheetmarked').append(doc);
+                transformDoc();
+                
+                // populate sidebar
+                $('#sheetmarked h2').each(function() {
+                    $('#cheatsections').append('<li><a href="#">' + $(this).text() + '</a></li>');
+                });
+                $('#cheatsections a').click(function(e) {
+                    g_sectchoice = $(this).text();
+                    updateView();
+                });
+
+                updateView();
+            });    
+        } catch (e) {
+            console.log(e);
+        }
+    });
+    
+    </script>
   </body>
 </html>
 
