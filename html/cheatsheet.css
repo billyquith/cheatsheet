@@ -1,67 +1,26 @@
 
-/*ul, li { margin:0; padding:0; }
-ul, li { list-style-type:none; color:#b5e853; border:1px solid #555; }
-ul.cheatsheet li, ul#sortableListsBase li { padding-left:40px; margin:5px; border:1px solid #777; background-color:#3f3f3f; }
-li div { padding:7px; background-color:#222; border:1px solid #3f3f3f; }
-li, ul, div { border-radius: 3px; }
-#cheatsheet { margin:10px auto; }
-
-h1 {
-    text-align:center;
-    border-color:#ddd;
-    border-radius:4px;
-    border-style:double;
-    border-width:4px;
-    margin:1em 0.5em;
-}
-
-kbd {
-    -moz-background-clip:border;
-    -moz-background-inline-policy:continuous;
-    -moz-background-origin:padding;
-    background:#ddd none repeat scroll 0 0;
-    border-color:#bbb #AAAAAA #888888 #BBBBBB;
-    border-style:solid;
-    border-width:1px 1px 2px 3px;
-    border-radius:2px;
-    color:#000000;
-    padding:1px 4px;
-    white-space:nowrap;
-    color:#777;
-    margin:2px 2px;
-}
-*/
-
-/*
- * Base structure
- */
+/* bootstrap ... */
 
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px;
 }
 
-
-/*
- * Global add-ons
- */
+/* Global add-ons */
 
 .sub-header {
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;
 }
 
-/*
- * Top navigation
+/* Top navigation
  * Hide default border to remove 1px line.
  */
 .navbar-fixed-top {
   border: 0;
 }
 
-/*
- * Sidebar
- */
+/* Sidebar */
 
 /* Hide for mobile, show later */
 .sidebar {
@@ -137,4 +96,8 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
+
+/* cheatsheet ... */
+
+pre { font-size:9pt; }
 

@@ -12,6 +12,7 @@
     <title>Cheatsheets</title>
 
     <link href="bootstrap-readable.min.css" rel="stylesheet">
+    <link href="styles/github.css" rel="stylesheet">
     <link href="cheatsheet.css" rel="stylesheet">
   </head>
 
@@ -55,10 +56,10 @@
       </div>
     </div>
 
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="jquery.min.js"></script>
     <script src="bootstrap.min.js"></script>
     <script src="marked.min.js"></script>
+    <script src="highlight.pack.js"></script>
     
     <script type="text/javascript">
     
@@ -144,17 +145,16 @@
                openerClass: ''
           }
       };
-
-      // select a view
-      $('#navbar a').click(function (){
-        $(this).parent().siblings().removeClass('active');
-        $(this).parent().addClass('active');
-        g_viewchoice = $(this).text();
-        updateView();
+      
+      marked.setOptions({
+        highlight: function (code, lang) {
+          return hljs.highlightAuto(code).value;
+        }
       });
 
       var cheatFileUrl = getURLParam('sheet') || 'eg';
-      cheatFileUrl = '../sheets/' + cheatFileUrl + '.md';
+      cheatFileUrl = '../sheets/' + cheatFileUrl + '.md';      
+
       try {
         console.log('requesting: ' + cheatFileUrl);
         $.get(cheatFileUrl, function(data) {
@@ -177,6 +177,14 @@
           // default view
           g_viewchoice = 'sections';
           $("#viewchoice li").first().addClass('active');
+
+          // respond to view selection
+          $('#navbar a').click(function (){
+            $(this).parent().siblings().removeClass('active');
+            $(this).parent().addClass('active');
+            g_viewchoice = $(this).text();
+            updateView();
+          });
 
           // select first section by default
           g_sectchoice = $('#sheetmarked h2').first().text();
