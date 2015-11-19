@@ -11,14 +11,8 @@
 
     <title>Cheatsheets</title>
 
-    <link href="bootstrap-simplex.min.css" rel="stylesheet">
+    <link href="bootstrap-readable.min.css" rel="stylesheet">
     <link href="cheatsheet.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <!--<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>-->
-      <!--<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>-->
-    <![endif]-->
   </head>
 
   <body>
@@ -38,8 +32,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right" id="viewchoice">
-            <li><a href="#">all</a></li>
             <li><a href="#">sections</a></li>            
+            <li><a href="#">all</a></li>
           </ul>
           <!--<form class="navbar-form navbar-right">-->
           <!--  <input type="text" class="form-control" placeholder="Search...">-->
@@ -52,8 +46,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar" id="cheatsections">
-            <!--<li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>-->
-            <!--<li><a href="#">Reports</a></li>-->
+            <!-- sections -->
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -69,7 +62,7 @@
     
     <script type="text/javascript">
     
-    var g_viewchoice = 'all';
+    var g_viewchoice = null;
     var g_sectchoice = null;
 
     function getURLParam(name) {
@@ -103,10 +96,13 @@
     function showSectionChoice() {
         $('#sheetmarked h2').filter(function() {
             if ($(this).text() == g_sectchoice) {
+                // show section
                 $('#sheetinfo').empty();
                 $(this).next().clone().appendTo('#sheetinfo');
             }
         });
+        
+  $(this).addClass('active');
     }    
     function showAllSections() {
         $('#sheetinfo').empty();
@@ -145,7 +141,10 @@
             }
         };
                 
+        // select a view
         $('#navbar a').click(function (){
+            $(this).parent().siblings().removeClass('active');
+            $(this).parent().addClass('active');
             g_viewchoice = $(this).text();
             updateView();
         });
@@ -164,10 +163,20 @@
                     $('#cheatsections').append('<li><a href="#">' + $(this).text() + '</a></li>');
                 });
                 $('#cheatsections a').click(function(e) {
+                    // select a section choice
                     g_sectchoice = $(this).text();
+                    $(this).parent().siblings().removeClass('active');
+                    $(this).parent().addClass('active');
                     updateView();
                 });
+
+                // default view
+                g_viewchoice = 'sections';
+                $("#viewchoice li").first().addClass('active');
+                
+                // select first section by default
                 g_sectchoice = $('#sheetmarked h2').first().text();
+                $('#cheatsections li').first().addClass('active');
 
                 updateView();
             });    
