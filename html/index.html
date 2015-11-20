@@ -11,7 +11,7 @@
 
     <title>Cheatsheets</title>
 
-    <link href="bootstrap-simplex.min.css" rel="stylesheet">
+    <link href="bootstrap.min.css" rel="stylesheet">
     <link href="styles/github.css" rel="stylesheet">
     <link href="cheatsheet.css" rel="stylesheet">
   </head>
@@ -79,12 +79,8 @@
         return null;
     }
 
-    function transformDoc() {
-      
-      $('#sheetmarked h2').each(function(){
-         $(this).nextUntil('h2').wrapAll('<div></div>');      
-      });
-      
+    function transformDoc()
+    {
       // set title
       $('.navbar-brand').empty(); $('.navbar-brand').append('Cheatsheet: ' +
       $('#sheetmarked h1').text());
@@ -92,8 +88,28 @@
       // don't need cheatsheet title
       $('#sheetmarked h1').remove();
 
+      // group all items between h2 sections
+      $('#sheetmarked h2').each(function(){
+         $(this).nextUntil('h2').wrapAll('<div></div>');      
+      });      
+
       // table markup
-      $('#sheetmarked table').addClass('table table-striped');
+      $('#sheetmarked table').addClass('table table-striped table-bordered table-condensed');
+      
+      // tranform ul lists containing '::' splitters into list groups
+      $('#sheetmarked ul > li:contains( :: )')
+          .parent()
+          .addClass('list-group')          
+          .children('li')
+          .addClass('list-group-item')
+      //.each(function() {
+      //    var txt = $(this).text();
+      //    txt = txt.replace('::', '-');
+      //    $(this).empty();
+      //    $(this).append('<div class="valuedecl">' + txt + '<div/>');
+      //});
+      ;
+      //.wrapInner('<div class="valuedecl"></div>');
 
       // open external links in a new tab
       $('#sheetmarked a').filter(function() {

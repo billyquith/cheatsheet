@@ -4,6 +4,9 @@ Example
 
 Formatting
 ----------
+
+#### Formatting examples
+
 - Some useful information *in italics* and **in bold**.
 - `int itCode();` in here.
 - <kbd>Ctrl</kbd> + <kbd>A</kbd> is for 'orses.
@@ -20,8 +23,7 @@ Note this must be >h2.
 - which ends here
 
 
-Table
------
+This is a small table example:
 
 Country | Size | Food
 ------- | ---- | ----
@@ -29,8 +31,61 @@ UK | small | chips
 US | big | burgers
 France | medium | cheese
 
+
+This is an extension, lists with splits, for values-comments:
+
+- `RGB(255,0,0)`  :: red
+- `RGB(0,255)`    :: green
+- `RGB(0,0,255)`  :: blue
+
+- `${parameter:-word}` :: If parameter is unset or null, the expansion of word is substituted. Otherwise, the value of parameter is substituted.- 
+- `${parameter:=word}` :: If parameter is unset or null, the expansion of word is assigned to parameter. The value of parameter is then substituted. Positional parameters and special parameters may not be assigned to in this way.
+- `${parameter:?word}` :: If parameter is null or unset, the expansion of word (or a message to that effect if word is not present) is written to the standard error and the shell, if it is not interactive, exits. Otherwise, the value of parameter is substituted.
+- `${parameter:+word}` :: If parameter is null or unset, nothing is substituted, otherwise the expansion of word is substituted.
+
+
+### heading 3
+#### heading 4
+##### heading 5
+###### heading 6
+
+
+Table
+-----
+
+Big table example:
+
+Shortcut                       | Comment
+------------------------------ | -----------------------------------------
+<kbd>CTRL</kbd> + <kbd>A</kbd> | move to beginning of line
+<kbd>CTRL</kbd> + <kbd>B</kbd> | moves backward one character
+<kbd>CTRL</kbd> + <kbd>C</kbd> | halts the current command
+<kbd>CTRL</kbd> + <kbd>D</kbd> | deletes one character backward or logs out of current session, similar to exit
+<kbd>CTRL</kbd> + <kbd>E</kbd> | moves to end of line
+<kbd>CTRL</kbd> + <kbd>F</kbd> | moves forward one character
+<kbd>CTRL</kbd> + <kbd>G</kbd> | aborts the current editing command and ring the terminal bell
+<kbd>CTRL</kbd> + <kbd>J</kbd> | same as RETURN
+<kbd>CTRL</kbd> + <kbd>K</kbd> | deletes (kill) forward to end of line
+<kbd>CTRL</kbd> + <kbd>L</kbd> | clears screen and redisplay the line
+<kbd>CTRL</kbd> + <kbd>M</kbd> | same as RETURN
+<kbd>CTRL</kbd> + <kbd>N</kbd> | next line in command history
+<kbd>CTRL</kbd> + <kbd>O</kbd> | same as RETURN, then displays next line in history file
+<kbd>CTRL</kbd> + <kbd>P</kbd> | previous line in command history
+<kbd>CTRL</kbd> + <kbd>R</kbd> | searches backward
+<kbd>CTRL</kbd> + <kbd>S</kbd> | searches forward
+<kbd>CTRL</kbd> + <kbd>T</kbd> | transposes two characters
+<kbd>CTRL</kbd> + <kbd>U</kbd> | kills backward from point to the beginning of line
+<kbd>CTRL</kbd> + <kbd>V</kbd> | makes the next character typed verbatim
+<kbd>CTRL</kbd> + <kbd>W</kbd> | kills the word behind the cursor
+<kbd>CTRL</kbd> + <kbd>X</kbd> | lists the possible filename completefions of the current word
+<kbd>CTRL</kbd> + <kbd>Y</kbd> | retrieves (yank) last item killed
+<kbd>CTRL</kbd> + <kbd>Z</kbd> | stops the current command, resume with fg in the foreground or bg in the background
+
+
 Code
 ----
+
+Some BASH:
 
 ```bash
 #!/bin/bash
@@ -64,6 +119,8 @@ genApacheConf(){
  echo -e "# Host $1/$2 :"
 }```
 
+Some Python:
+
 ```python
 @requires_authorization
 def somefunc(param1='', param2=0):
@@ -77,6 +134,8 @@ class SomeClass:
 
 >>> message = '''interpreter
 ... prompt'''```
+
+Some Lua:
 
 ```lua
 --[[
