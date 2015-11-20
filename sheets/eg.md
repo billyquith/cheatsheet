@@ -117,7 +117,8 @@ genApacheConf(){
  fi
  host_root="${APACHE_HOME_DIR}$1/$2/$(title)"
  echo -e "# Host $1/$2 :"
-}```
+}
+```
 
 Some Python:
 
@@ -133,7 +134,8 @@ class SomeClass:
     pass
 
 >>> message = '''interpreter
-... prompt'''```
+... prompt'''
+```
 
 Some Lua:
 
