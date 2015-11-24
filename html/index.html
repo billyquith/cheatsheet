@@ -95,21 +95,19 @@
 
       // table markup
       $('#sheetmarked table').addClass('table table-striped table-bordered table-condensed');
-      
+
       // tranform ul lists containing '::' splitters into list groups
       $('#sheetmarked ul > li:contains( :: )')
-          .parent()
-          .addClass('list-group')          
-          .children('li')
-          .addClass('list-group-item')
-      //.each(function() {
-      //    var txt = $(this).text();
-      //    txt = txt.replace('::', '-');
-      //    $(this).empty();
-      //    $(this).append('<div class="valuedecl">' + txt + '<div/>');
-      //});
-      ;
-      //.wrapInner('<div class="valuedecl"></div>');
+        .parent()
+        .addClass('vals-list')
+        .children('li')
+		.each(function() {
+			var txt = $(this).html();
+			var info = txt.split(' :: ');
+			$(this).replaceWith('<div class="row">'
+								+ '<div class="col-md-4 vals-value">'+info[0]+'</div>'
+								+ '<div class="col-md-7 vals-comment">'+ info[1]+'</div></div>');
+		});
 
       // open external links in a new tab
       $('#sheetmarked a').filter(function() {
