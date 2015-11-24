@@ -11,15 +11,17 @@ Control
 if [ expression ]; then
     commands
 fi
+```
 
-
+```bash
 if [ expression ]; then
     commands
 else
     commands
 fi
+```
 
-
+```bash
 if [ expression ]; then
     commands
 elif [ expression2 ]; then
@@ -27,15 +29,17 @@ elif [ expression2 ]; then
 else
     commands
 fi
+```
 
-
+```bash
 case string in
 str1)   commands;;
 str2)   commands;;
 *)      commands;;
 esac
+```
 
-
+```bash
 # This executes once for each item in the list. This list can be a variable
 # that contains several words separated by spaces (such as output from ls
 # or cat), or it can be a list of values that is typed directly into the
@@ -45,14 +49,16 @@ for var1 in list
 do
     commands
 done
+```
 
-
+```bash
 while [ expression ]
 do
     commands
 done
+```
 
-
+```bash
 until [ expression ]
 do
     commands
@@ -63,12 +69,8 @@ done
 
 Functions are declared using syntax:
 
-    name () compound-command [ redirections ]
-
-or
-
-    function name [()] compound-command [ redirections ]
-
+    [function] name [()] compound-command [ redirections ]
+    
 
 Tests
 -----
@@ -77,62 +79,62 @@ Tests
 
 #### Numeric Comparisons
 
-- `int1 -eq int2`	True if int1 is equal to int2.
-- `int1 -ge int2`	True if int1 is greater than or equal to int2.
-- `int1 -gt int2`	True if int1 is greater than int2.
-- `int1 -le int2`	True if int1 is less than or equal to int2
-- `int1 -lt int2`	True if int1 is less than int2
-- `int1 -ne int2`	True if int1 is not equal to int2
+- `int1 -eq int2` :: True if int1 is equal to int2.
+- `int1 -ge int2` :: True if int1 is greater than or equal to int2.
+- `int1 -gt int2` :: True if int1 is greater than int2.
+- `int1 -le int2` :: True if int1 is less than or equal to int2
+- `int1 -lt int2` :: True if int1 is less than int2
+- `int1 -ne int2` :: True if int1 is not equal to int2
 
 
 #### String Comparisons
 
-- `str1 = str2`	    True if str1 is identical to str2.
-- `str1 != str2`	True if str1 is not identical to str2.
-- `str`	            True if str is not null.
-- `-n str`       	True if the length of str is greater than zero.
-- `-z str`       	True if the length of str is equal to zero. (zero is different than null)
+- `str1 = str2`	    :: True if str1 is identical to str2.
+- `str1 != str2`    :: True if str1 is not identical to str2.
+- `str`	            :: True if str is not null.
+- `-n str`          :: True if the length of str is greater than zero.
+- `-z str`          :: True if the length of str is equal to zero. (zero is different than null)
 
 
 #### File Comparisons
 
-- `-d filename`	    True if file, filename is a directory.
-- `-f filename`	    True if file, filename is an ordinary file.
-- `-r filename`	    True if file, filename can be read by the process.
-- `-s filename`	    True if file, filename has a nonzero length.
-- `-w filename`	    True if file, filename can be written by the process.
-- `-x filename`	    True if file, filename is executable.
+- `-d filename`     :: True if file, filename is a directory.
+- `-f filename`     :: True if file, filename is an ordinary file.
+- `-r filename`     :: True if file, filename can be read by the process.
+- `-s filename`     :: True if file, filename has a nonzero length.
+- `-w filename`     :: True if file, filename can be written by the process.
+- `-x filename`     :: True if file, filename is executable.
 
 
 #### Expression Comparisons
 
-- `!expression`       True if expression is not true.
-- `expr1 -a expr2`    True if expr1 and expr2 are true. ( && , and )
-- `expr1 -o expr2`    True if expr1 or expr2 is true. ( ||, or )
+- `!expression`     :: True if expression is not true.
+- `expr1 -a expr2`  :: True if expr1 and expr2 are true. ( && , and )
+- `expr1 -o expr2`  :: True if expr1 or expr2 is true. ( ||, or )
 
 
 Variables
 ---------
 
-- `$1-$N` Stores the arguments (variables) that were passed to the shell program from the command line.
-- `$?`    Stores the exit value of the last command that was executed.
-- `$0`    Stores the first word of the entered command (the name of the shell program).
-- `$*`    Stores all the arguments that were entered on the command line ($1 $2 ...).
-- `"$@"`  Stores all the arguments that were entered on the command line, individually quoted ("$1" "$2" ...).
+#### Arguments
+
+- `$1-$N` :: Stores the arguments (variables) that were passed to the shell program from the command line.
+- `$?`    :: Stores the exit value of the last command that was executed.
+- `$0`    :: Stores the first word of the entered command (the name of the shell program).
+- `$*`    :: Stores all the arguments that were entered on the command line ($1 $2 ...).
+- `"$@"`  :: Stores all the arguments that were entered on the command line, individually quoted ("$1" "$2" ...).
 
 #### Shell Parameter Expansion
 
-Param | Comment
------ | -------
-`${parameter:-word}` | If parameter is unset or null, the expansion of word is substituted. Otherwise, the value of parameter is substituted.- 
-`${parameter:=word}` | If parameter is unset or null, the expansion of word is assigned to parameter. The value of parameter is then substituted. Positional parameters and special parameters may not be assigned to in this way.
-`${parameter:?word}` | If parameter is null or unset, the expansion of word (or a message to that effect if word is not present) is written to the standard error and the shell, if it is not interactive, exits. Otherwise, the value of parameter is substituted.
-`${parameter:+word}` | If parameter is null or unset, nothing is substituted, otherwise the expansion of word is substituted.
+- `${parameter:-word}` :: If parameter is unset or null, the expansion of word is substituted. Otherwise, the value of parameter is substituted.- 
+- `${parameter:=word}` :: If parameter is unset or null, the expansion of word is assigned to parameter. The value of parameter is then substituted. Positional parameters and special parameters may not be assigned to in this way.
+- `${parameter:?word}` :: If parameter is null or unset, the expansion of word (or a message to that effect if word is not present) is written to the standard error and the shell, if it is not interactive, exits. Otherwise, the value of parameter is substituted.
+- `${parameter:+word}` :: If parameter is null or unset, nothing is substituted, otherwise the expansion of word is substituted.
 
 #### Substrings
 
-- `${parameter:offset}`
-- `${parameter:offset:length}`
+- `${parameter:offset}`         :: All characters after offset.
+- `${parameter:offset:length}`  :: All characters after offset for length.
 
 
 Keyboard
