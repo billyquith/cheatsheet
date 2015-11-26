@@ -8,34 +8,34 @@ Control
 ### Logic
 
 ```bash
-if [ expression ]; then
-    commands
+if [ EXPRESSION ]; then
+    COMMANDS
 fi
 ```
 
 ```bash
-if [ expression ]; then
-    commands
+if [ EXPRESSION ]; then
+    COMMANDS
 else
-    commands
+    COMMANDS
 fi
 ```
 
 ```bash
-if [ expression ]; then
+if [ EXPRESSION ]; then
     commands
-elif [ expression2 ]; then
-    commands
+elif [ EXPRESSION2 ]; then
+    COMMANDS
 else
-    commands
+    COMMANDS
 fi
 ```
 
 ```bash
-case string in
-str1)   commands;;
-str2)   commands;;
-*)      commands;;
+case STRING in
+str1)   COMMANDS;;
+str2)   COMMANDS;;
+*)      COMMANDS;;
 esac
 ```
 
@@ -45,32 +45,79 @@ esac
 # or cat), or it can be a list of values that is typed directly into the
 # statement. Each time through the loop, the variable var1 is assigned
 # the current item in the list, until the last one is reached.
-for var1 in list
+for VAR1 in LIST
 do
-    commands
+    COMMANDS
 done
 ```
 
 ```bash
-while [ expression ]
+while [ EXPRESSION ]
 do
-    commands
+    COMMANDS
 done
 ```
 
 ```bash
-until [ expression ]
+until [ EXPRESSION ]
 do
-    commands
+    COMMANDS
 done
 ```
+
+#### Select
+
+Easy generation of menus:
+
+```bash
+select NAME [in WORDS]; do COMMANDS; done
+```
+
+- WORDS is expanded, generating *list of items*.
+- *List* is printed on the *stderr stream*, each preceded by a number.
+- `select N; do COMMANDS; done` - line is read from the standard input, as if `in "$@"` specified.
+
+The *PS3 prompt* is then displayed and a line is *read from stdin*:
+
+- If input line a *number* corresponding to displayed word, value of name is set to word.
+- If input line *empty*, the words and prompt are displayed again.
+- If *EOF* is read, the select command completes.
+- Any *other* value read causes name to be set to null.
+- The line read is saved in the *variable REPLY*.
+
+The commands are executed after each selection until a break command is executed (or <kbd>Ctrl</kbd> + <kbd>D</kbd>).
+
+```bash
+# Pick a filename from the current directory, and.out displays the name and
+# index of the file selected.
+select fname in *;
+do
+	echo "You picked $fname \($REPLY\)";
+    break;
+done
+```
+
 
 ### Functions
 
 Functions are declared using syntax:
 
-    [function] name [()] compound-command [ redirections ]
-    
+```bash
+[function] NAME [()] COMPOUND-COMMAND [ REDIRECTIONS ]
+```
+
+#### Redirection
+
+Functions can have input and output redirected. E.g. when called,
+*input* comes from`foo.in`, *output* to `foo.out`, and *error* to `foo.err`:
+
+```bash
+function foo() {
+    COMMANDS;
+} < foo.in > foo.out 2> foo.err
+
+```
+
 
 Tests
 -----
