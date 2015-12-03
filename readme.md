@@ -32,25 +32,18 @@ Prefer triple single quotes over indenting. Optionally add the language.
 
     ```bash
     if [ $1 -eq 0 ]; then
-        echo "$1 is not zero"
+        echo "zero!"
     fi
     ```
 
 #### Tables
 
-Tables are allowed. Format is [same as Github][2].
+Tables are allowed. Format is [same as Github][2]. (*Replace 'I' with '|'!*)
 
-    Heading1 | Heading2
-    -------- | --------
-    Apple    | banana
-    Pear     | mango    
-
-Github preview:
-
-Heading1 | Heading2
--------- | --------
-Apple    | banana
-Pear     | mango    
+    Heading1 I Heading2
+    -------- I --------
+    apple    I banana
+    pear     I mango    
 
 #### Value-Comment list
 
