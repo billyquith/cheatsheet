@@ -8,13 +8,13 @@ Syntax/Types
   * [Website](http://moonscript.org).
   * [Reference](http://moonscript.org/reference/).
 
-```coffee
+```moon
 -- I am a comment
 ```
 
 Minus sign plays two roles, a unary negation operator and a binary subtraction operator:
 
-```coffee
+```moon
 a = x - 10      -- local a = x - 10
 b = x-10        -- local b = x - 10
 c = x -y        -- local c = x(-y)
@@ -27,7 +27,7 @@ Literals
 
 New, unassigned names are *local* by default:
 
-```coffee
+```moon
 hello = "world"
 a,b,c = 1, 2, 3
 hello = 123 -- uses the existing variable
@@ -38,7 +38,7 @@ some_string = "Here is a string
 
 #### Update
 
-```coffee
+```moon
 x = 0
 x += 10
 
@@ -53,7 +53,7 @@ b and= true or false
 
 Key assigned using ':'. Brackets are optional.
   
-```coffee
+```moon
 t = {}      -- table
 
 some_values = {
@@ -72,7 +72,7 @@ profile =                           -- no brackets
 
 Can be created on single line:
 
-```coffee
+```moon
 my_function dance: "Tango", partner: "none"     -- pass table to function
 
 y = type: "dog", legs: 4, tails: 1              -- create & assign
@@ -80,7 +80,7 @@ y = type: "dog", legs: 4, tails: 1              -- create & assign
 
 Table of variables and where keys same as the variable names:
 
-```coffee
+```moon
 hair = "golden"
 height = 200
 person = { :hair, :height, shoe_size: 40 }
@@ -90,7 +90,7 @@ person = { :hair, :height, shoe_size: 40 }
 
 No arguments. Indenting defines scope.
 
-```coffee
+```moon
 func_a = -> print "hello world"
 
 func_b = ->
@@ -102,7 +102,7 @@ func_a!     -- call with no args, preferred to func_b()
 
 With arguments:
 
-```coffee
+```moon
 print_sum = (x, y) -> print "sum", x + y    -- no return value
 
 calc_sum = (x, y) -> x + y                  -- implicit return value
@@ -123,20 +123,20 @@ my_func 5,6,7,              -- multi-line call
 
 Can return multiple values:
 
-```coffee
+```moon
 mystery = (x, y) -> x + y, x - y
 a,b = mystery 10, 20
 ```
 
 Self idiom:
 
-```coffee
+```moon
 func = (num) => @value + num
 ```
 
 Argument defaults:
 
-```coffee
+```moon
 my_function = (name="something", height=100) ->
   print "Hello I am", name
   print "My height is", height
@@ -153,7 +153,7 @@ Comprehensions
  
  List comprehensions use `[]`. `items` for key,value. `*items` for value.
  
-```coffee
+```moon
 items = { 1, 2, 3, 4 }
 doubled = [item * 2 for i, item in ipairs items]  -- new list, items doubled
 
@@ -162,13 +162,13 @@ doubled = [item * 2 for item in *items]           -- use value iterator
 
 Items created conditionally:
 
-```coffee
+```moon
 slice = [item for i, item in ipairs items when i > 1 and i < 3]
 ```
 
 Multiple, nested `for` loops:
 
-```coffee
+```moon
 x_coords = {4, 5, 6, 7}
 y_coords = {9, 2, 3}
 
@@ -177,13 +177,13 @@ points = [{x,y} for x in *x_coords for y in *y_coords]
 
 Numeric loop:
 
-```coffee
+```moon
 evens = [i for i=1,100 when i % 2 == 0]
 ```
 
 Note, `for` loops can also create arrays:
 
-```coffee
+```moon
 doubled_evens = for i=1,10 do if i%2 == 0 then i*2 else i
 ```
 
@@ -191,7 +191,7 @@ doubled_evens = for i=1,10 do if i%2 == 0 then i*2 else i
 
 Table comprehensions use `{}`.
 
-```coffee
+```moon
 thing = {
   color: "red"
   name: "fast"
@@ -209,7 +209,7 @@ tbl = {unpack tuple for tuple in *tuples}       -- key,value pairs
 
 Conditionally:
 
-```coffee
+```moon
 no_color = {k,v for k,v in pairs thing when k != "color"}
 ```
 
@@ -221,7 +221,7 @@ Iteration
 
 Numeric and generic `for` loops:
 
-```coffee
+```moon
 for i = 10, 20                      -- print 10 to 20
   print i
 
@@ -234,7 +234,7 @@ for key, value in pairs object      -- iterate object
 
 Can occupy single line:
 
-```coffee
+```moon
 for item in *items do print item
 
 for j = 1,10,3 do print j
@@ -242,7 +242,7 @@ for j = 1,10,3 do print j
 
 Can be used as expression to create array. Note, to return from a function, must use `return`.
 
-```coffee
+```moon
 fizz_buzz = for i=1,100     -- make array
   if i % 3 == 0
     i * 3
@@ -259,7 +259,7 @@ func_b = -> return for i=1,10 do i      -- return array
 
 `while` loops can be single or multiple lines.
 
-```coffee
+```moon
 i = 10
 while i > 0                     -- print 1 to 10
   print i
@@ -270,7 +270,7 @@ while running == true do my_function!
 
 Can incorporate `break` and `continue`, with conditionals:
 
-```coffee
+```moon
 i = 0
 while i < 10
   continue if i % 2 == 0
@@ -280,7 +280,7 @@ while i < 10
 
 Can be used as an expression:
 
-```coffee
+```moon
 i = 0
 array = while true do if i % 3 == 0 continue else if i > 100 break else i
 ```
@@ -293,7 +293,7 @@ Conditionals
 
 `if` can be single or multi-line:
 
-```coffee
+```moon
 have_coins = false
 
 if have_coins
@@ -306,7 +306,7 @@ if have_coins then print "Got coins" else print "No coins"      -- single line
 
 Expression:
 
-```coffee
+```moon
 have_coins = false
 print if have_coins then "Got coins" else "No coins"
 
@@ -326,7 +326,7 @@ print message -- prints: I am very tall
 
 With assignment:
 
-```coffee
+```moon
 if user = database.find_user "moon"     -- 'user' assigned and then tested
   print user.name
 
@@ -342,7 +342,7 @@ else
 
 `unless` is the opposite of `if`.
 
-```coffee
+```moon
 unless os.date("%A") == "Monday"
   print "it is not Monday!"
   
@@ -353,7 +353,7 @@ print "You're lucky!" unless math.random! > 0.1
 
 Conditionals can be postfixed on a line.
 
-```coffee
+```moon
 print "hello world" if name == "Rob"
     
 print "hello world" unless name == "John"
@@ -361,7 +361,7 @@ print "hello world" unless name == "John"
     
 Loops may also be postfixed:
 
-```coffee
+```moon
 print "item: ", item for item in *items        
 ```
 
@@ -369,7 +369,7 @@ print "item: ", item for item in *items
 
 `switch` is shorthand for a series of `if` statements. Use `then` to write a block on a single line.
 
-```coffee
+```moon
 name = "Dan"
 switch name
   when "Robert"
@@ -393,7 +393,7 @@ Manipulation
 
 A slice is a subset of an index: `items[MIN,MAX]`, i.e. from MIN to MAX, inclusive. Or `items[MIN,MAX,STEP]` using step size.
 
-```coffee
+```moon
 slice = [item for item in *items[1,5]]      -- 1st to 5th items of array
 
 slice = [item for item in *items[,3]]       -- the first 3
@@ -408,7 +408,7 @@ for item in *items[,,2] do print item       -- all odd items, 1,3,5, ...
 
 Evaluate and substitute contents of `#{}`.
 
-```coffee
+```moon
 print "I am #{math.random! * 100}% sure."
 ```
 
@@ -418,7 +418,7 @@ Objects
 
 A `class` can be declared and called:
   
-```coffee
+```moon
 class Inventory
   new: =>
     @items = {}
@@ -444,7 +444,7 @@ Where:
   
 ### Class properties
 
-```coffee
+```moon
 class Person
   clothes: {}                       -- shared, class property
   give_item: (name) =>
@@ -463,7 +463,7 @@ print item for item in *a.clothes   -- will print both pants and shirt
 
 `extends` is used to extend a class further. If we don’t define a constructor on the subclass, the parent class' constructor is called when we make a new instance. If we do then we use the `super` method to call the parent constructor.
   
-```coffee
+```moon
 class BackPack extends Inventory
   size: 10
   add_item: (name) =>
@@ -476,7 +476,7 @@ When a subclass is instanced, it sends a message to the parent by calling `__inh
 - the class that is being inherited
 - the child class.
  
-```coffee
+```moon
 class Shelf
   @__inherited: (child) =>
     print @__name, "was inherited by", child.__name
@@ -491,7 +491,7 @@ class Cupboard extends Shelf        -- will print: Shelf was inherited by Cupboa
 - As an object, i.e. a reference to the parent class object.
 - Called like a function. I.e. It will call the function of the same name in the parent class. Current `self` will automatically be passed as the first argument.
 
-```coffee
+```moon
 class MyClass extends ParentClass
   a_method: =>
     -- the following have the same effect:
@@ -502,42 +502,42 @@ class MyClass extends ParentClass
     assert super == ParentClass         -- super as a value is equal to the parent class:
 ```
 
-```coffee
+```moon
 ```
 
-```coffee
+```moon
 ```
 
-```coffee
+```moon
 ```
 
-```coffee
+```moon
 ```
 
-```coffee
+```moon
 ```
 
-```coffee
+```moon
 ```
 
-```coffee
+```moon
 ```
 
-```coffee
+```moon
 ```
 
-```coffee
+```moon
 ```
 
-```coffee
+```moon
 ```
 
-```coffee
+```moon
 ```
 
-```coffee
+```moon
 ```
 
-```coffee
+```moon
 ```
 

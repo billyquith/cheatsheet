@@ -162,13 +162,6 @@
           }
       };
       
-      // use highlight.js to do the code syntax highlighting
-      marked.setOptions({
-        highlight: function (code, lang) {
-          return hljs.highlightAuto(code).value;
-        }
-      });
-
       var cheatFileUrl = getURLParam('sheet') || 'eg';
       cheatFileUrl = '../sheets/' + cheatFileUrl + '.md';      
 
@@ -206,6 +199,8 @@
           // select first section by default
           g_sectchoice = $('#sheetmarked h2').first().text();
           $('#cheatsections li').first().addClass('active');
+
+          hljs.initHighlighting(); // apply code highlighting
 
           updateView();
         });
