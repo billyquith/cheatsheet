@@ -36,7 +36,7 @@ some_string = "Here is a string
   that has a line break in it."
 ```
 
-#### Update
+### Update
 
 ```moon
 x = 0
@@ -432,6 +432,8 @@ class Inventory
 inv = Inventory!
 inv\add_item "t-shirt"
 inv\add_item "pants"
+
+assert b.__class == BackPack    -- check class type
 ```
 
 Where:
@@ -440,24 +442,8 @@ Where:
 * Use *fat arrow* when calling instance methods to handle the creation of a `self` argument, like `:` in Lua.
 * `@` prefix on variable is shorthand for `self.. @items` becomes `self.items`.
 * `\` operator is used to pass `self` to instance method.
+* Each class instance carries its type using `__class`.
 * [Reference](http://moonscript.org/reference/#the-language/object-oriented-programming).
-  
-### Class properties
-
-```moon
-class Person
-  clothes: {}                       -- shared, class property
-  give_item: (name) =>
-    table.insert @clothes, name
-
-a = Person!
-b = Person!
-
-a\give_item "pants"
-b\give_item "shirt"
-
-print item for item in *a.clothes   -- will print both pants and shirt
-```
 
 ### Inheritance
 
@@ -502,7 +488,351 @@ class MyClass extends ParentClass
     assert super == ParentClass         -- super as a value is equal to the parent class:
 ```
 
+
+Class details
+-------------
+
+### Class objects
+
+Class properties are shared between all instances of the class, stored in the *base* table.
+The base table also holds the class metamethods.
+
 ```moon
+class Person
+  clothes: {}                       -- shared, class property (base)
+  give_item: (name) =>              -- method also shared (base)
+    table.insert @clothes, name
+
+a = Person!
+b = Person!
+
+a\give_item "pants"
+b\give_item "shirt"
+
+print item for item in *a.clothes   -- will print both pants and shirt
+```
+
+The class instance specific properties are stored in the *class* table.
+
+```moon
+class Person
+  @clothes: {}                      -- per-instance property (class)
+  give_item: (name) =>
+    table.insert @clothes, name
+
+a = Person!
+b = Person!
+
+a\give_item "pants"
+b\give_item "shirt"
+
+print item for item in *a.clothes   -- will print "pants"
+print item for item in *b.clothes   -- will print "shirt"
+```
+
+Note, class properties may also be declared using `=` assignment.
+
+```moon
+class Things
+  @class_var = "hello world"
+  @another: "hello also!"       -- similar
+```
+
+### Class variables
+
+* To get class name use `__name`.
+* To get class instance type use `__class`.
+* To get parent class, use `__parent`. This is what subclass extends.
+* To get base class, use `__base`. This contains shared properties and metamethods.
+
+```moon
+instance = Backpack!        -- create instance
+cls = instance.__class      -- get class type of instance
+print cls.__name            -- name of class type
+print cls.__base            -- base class type
+```
+
+### @ & @@
+
+Use `@property` to access class instance property, short for `self.property`. 
+
+```moon
+class Things
+  @some_func: => print "Hello from", @__name
+
+Things\some_func!
+
+-- class variables not visible in instances
+assert Things().some_func == nil
+```
+
+Use `@@property` to access class property, short for `self.__class.property`.
+
+```moon
+class Counter
+  @count: 0
+
+  new: =>
+    @@count += 1
+
+Counter!
+Counter!
+
+print Counter.count -- prints 2
+```
+
+### Expressions
+
+A class maybe be used as an expression and assigned:
+
+```moon
+x = class Bucket
+  drops: 0
+  add_drop: => @drops += 1
+```
+
+It may also be assigned *anonymously*. If assigned, the variable name is taken instead.
+
+```moon
+BigBucket = class extends Bucket
+  add_drop: => @drops += 10
+
+assert Bucket.__name == "BigBucket"
+```
+
+
+Scope
+-----
+
+### Global/Export
+
+All assignment is *local* by default. Use `export` to declare *global variables*.
+
+```moon
+export some_number, message_str = 100, "hello world"
+```
+
+`export` is necessary to declare what is *visible* outside a module.
+
+```moon
+module "my_module", package.seeall          -- module
+export print_result
+
+length = (x, y) -> math.sqrt x*x + y*y
+
+print_result = (x, y) ->
+  print "Length is ", length x, y
+```
+
+```moon
+require "my_module"                         -- module user
+
+my_module.print_result 4, 5 -- prints the result
+
+print my_module.length 6, 7 -- errors, `length` not visible
+```
+
+* `export *` will export all in current scope.
+* `export ^` will export all proper names (that begin with a capital letter).
+
+### Local
+
+Use `local` to pre-declare locals:
+
+```moon
+local a
+if something
+  a = 1
+print a         -- nil or 1
+```
+
+```moon
+local a = 1
+if something
+  local a       -- a shadowed
+  a = 3
+print a         -- always 1
+```
+
+```moon
+local first, second     -- allow mutual references
+
+first = -> second!
+
+second = -> first!
+```
+
+* `local *` will *forward declare* all variables in current scope.
+* `local ^` will *forward declare* all proper names (that begin with a capital letter).
+
+
+```moon
+local *         -- local first, second, data
+
+first = ->
+  print data    -- without forward declaration, this would fail
+  second!       -- as would this
+
+second = ->
+  first!
+
+data = {}
+```
+
+### Import
+
+Use `import` to bring values from a table.
+
+```moon
+import C, Ct, Cmt from lpeg
+
+import                          -- multi-line
+  assert_csrf
+  assert_timezone
+  not_found
+  require_login
+  from require "helpers"
+```
+
+To import module contents that requires context:
+
+```moon
+my_module =
+  state: 100
+  add: (value) =>
+    self.state + value
+
+import \add from my_module      
+
+print add 22 -- equivalent to calling my_module\add 22
+```
+
+
+Blocks
+------
+
+### With
+
+`with` can be used to avoid repetition of instance names:
+
+```moon
+with Person!
+  .name = "Oswald"
+  \add_relative my_dad
+  \save!
+  print .name
+  
+file = with File "favorite_foods.txt"   -- return created object
+  \set_encoding "utf8"
+  
+create_person = (name,  relatives) ->
+  with Person!
+    .name = name
+    \add_relative relative for relative in *relatives
+
+me = create_person "Leaf", {dad, mother, sister}
+
+with str = "Hello"
+  print "original:", str
+  print "upper:", \upper!
+```
+
+### Do
+
+Do can be used to limit scope:
+
+```moon
+do
+  var = "hello"
+  print var
+print var -- nil here
+```
+
+It can also be used as an expression:
+
+```moon
+counter = do
+  i = 0
+  ->
+    i += 1
+    i
+
+print counter!      -- 1
+print counter!      -- 2
+
+tbl = {
+  key: do
+    print "assigning key!"
+    1234
+}
+```
+
+
+Destructuring
+-------------
+
+Destructuring allows concise *extraction of values* from arrays and tables.
+
+```moon
+thing = {1,2}   -- array
+{a,b} = thing   -- unpack
+print a,b       -- 1, 2
+```
+
+From tables:
+
+```moon
+obj = {
+  hello: "world"
+  day: "tuesday"
+  length: 20
+}
+
+{hello: hello, day: the_day} = obj
+print hello, the_day
+```
+
+```moon
+obj2 = {
+  numbers: {1,2,3,4}
+  properties: {                 -- nested
+    color: "green"
+    height: 13.5
+  }
+}
+
+{
+  numbers: { first, second }    -- 1,2
+  properties: {
+    color: color
+  }
+} = obj2
+
+print first, second, color
+
+{ properties: { :height } } = obj2      -- avoid duplication
+
+print height
+```
+
+Useful to import from standard libraries:
+
+```moon
+{:concat, :insert} = table
+
+{:mix, :max, random: rand } = math
+```
+
+In `for` loop:
+
+```moon
+tuples = {
+  {"hello", "world"}
+  {"egg", "head"}
+}
+
+for {left, right} in *tuples
+  print left, right
 ```
 
 ```moon
@@ -517,26 +847,8 @@ class MyClass extends ParentClass
 ```moon
 ```
 
-```moon
-```
-
-```moon
-```
-
-```moon
-```
-
-```moon
-```
-
-```moon
-```
-
-```moon
-```
-
-```moon
-```
+Last
+----
 
 ```moon
 ```
