@@ -1,15 +1,43 @@
 Moonscript
 ==========  
 
-Syntax/Types
+Introductory
 ------------
 
-* Moonscript 4.0
-  * [Website](http://moonscript.org).
-  * [Reference](http://moonscript.org/reference/).
+### About
+
+* These notes are for Moonscript version: 4.0
+* [Website](http://moonscript.org)
+* [License](http://moonscript.org/reference/#license-mit) is MIT.
+* [Language reference](http://moonscript.org/reference/)
+* [Online compiler](http://moonscript.org/compiler/)
+* Moonscript compiles to Lua code. It can therefore use things like LuaJIT, and all Lua libraries.
+
+### Comments
 
 ```moon
 -- I am a comment
+```
+
+### Assignment
+
+New, unassigned names are *local* by default (unlike Lua, where default is global):
+
+```moon
+hello = 1.75
+a,b,c = 1, 2, 3     -- multiple assignment
+hello = "Bob"       -- uses the existing variable (changing type)
+```
+
+
+Literals
+--------
+
+### Numbers
+
+```moon
+a,b,c = 1.75, 2.5e10, -7
+d = a + b * c / 12.5
 ```
 
 Minus sign plays two roles, a unary negation operator and a binary subtraction operator:
@@ -21,37 +49,23 @@ c = x -y        -- local c = x(-y)
 d = x- z        -- local d = x - z
 ```
 
-
-Literals
---------
-
-New, unassigned names are *local* by default:
+### Strings
 
 ```moon
-hello = "world"
-a,b,c = 1, 2, 3
-hello = 123 -- uses the existing variable
+str2 = "double quote"
+
+str1 = 'single "quote" containing quotes'
 
 some_string = "Here is a string
   that has a line break in it."
+  
+joined = str1 .. " and more"
 ```
 
-### Update
-
-```moon
-x = 0
-x += 10
-
-s = "hello "
-s ..= "world"
-
-b = false
-b and= true or false
-```
 
 ### Tables
 
-Key assigned using ':'. Brackets are optional.
+Key assigned using `:`. Brackets are optional.
   
 ```moon
 t = {}      -- table
@@ -73,9 +87,9 @@ profile =                           -- no brackets
 Can be created on single line:
 
 ```moon
-my_function dance: "Tango", partner: "none"     -- pass table to function
+my_function dance: "Tango", partner: "none" -- pass table to function
 
-y = type: "dog", legs: 4, tails: 1              -- create & assign
+y = type: "dog", legs: 4, tails: 1          -- create & assign
 ```
 
 Table of variables and where keys same as the variable names:
@@ -289,7 +303,7 @@ array = while true do if i % 3 == 0 continue else if i > 100 break else i
 Conditionals
 ------------
 
-### if
+### If
 
 `if` can be single or multi-line:
 
@@ -301,7 +315,7 @@ if have_coins
 else
   print "No coins"
   
-if have_coins then print "Got coins" else print "No coins"      -- single line
+if have_coins then print "Got coins" else print "No coins"  -- single line
 ```
 
 Expression:
@@ -338,7 +352,7 @@ else
   print "nothing :("
 ```    
 
-### unless
+### Unless
 
 `unless` is the opposite of `if`.
 
@@ -389,6 +403,19 @@ msg = switch math.random(1, 5)
 Manipulation
 ------------
 
+### Update
+
+```moon
+x = 0
+x += 10
+
+s = "hello "
+s ..= "world"
+
+b = false
+b and= true or false
+```
+
 ### Slicing
 
 A slice is a subset of an index: `items[MIN,MAX]`, i.e. from MIN to MAX, inclusive. Or `items[MIN,MAX,STEP]` using step size.
@@ -410,6 +437,66 @@ Evaluate and substitute contents of `#{}`.
 
 ```moon
 print "I am #{math.random! * 100}% sure."
+```
+
+
+Blocks
+------
+
+### With
+
+`with` can be used to avoid repetition of instance names:
+
+```moon
+with Person!
+  .name = "Oswald"
+  \add_relative my_dad
+  \save!
+  print .name
+  
+file = with File "favorite_foods.txt"   -- return created object
+  \set_encoding "utf8"
+  
+create_person = (name,  relatives) ->
+  with Person!
+    .name = name
+    \add_relative relative for relative in *relatives
+
+me = create_person "Leaf", {dad, mother, sister}
+
+with str = "Hello"
+  print "original:", str
+  print "upper:", \upper!
+```
+
+### Do
+
+Do can be used to limit scope:
+
+```moon
+do
+  var = "hello"
+  print var
+print var -- nil here
+```
+
+It can also be used as an expression:
+
+```moon
+counter = do
+  i = 0
+  ->
+    i += 1
+    i
+
+print counter!      -- 1
+print counter!      -- 2
+
+tbl = {
+  key: do
+    print "assigning key!"
+    1234
+}
 ```
 
 
@@ -467,7 +554,8 @@ class Shelf
   @__inherited: (child) =>
     print @__name, "was inherited by", child.__name
 
-class Cupboard extends Shelf        -- will print: Shelf was inherited by Cupboard
+-- Will print "Shelf was inherited by Cupboard":
+class Cupboard extends Shelf        
 ```
 
 ### Super
@@ -485,7 +573,7 @@ class MyClass extends ParentClass
     super\a_method "hello", "world"
     super.a_method self, "hello", "world"
     
-    assert super == ParentClass         -- super as a value is equal to the parent class:
+    assert super == ParentClass     -- super as a value is equal to the parent class:
 ```
 
 
@@ -707,64 +795,17 @@ import \add from my_module
 print add 22 -- equivalent to calling my_module\add 22
 ```
 
+### Modules
 
-Blocks
-------
-
-### With
-
-`with` can be used to avoid repetition of instance names:
+Files return, like functions. We return what we want exported from the module as a table.
 
 ```moon
-with Person!
-  .name = "Oswald"
-  \add_relative my_dad
-  \save!
-  print .name
-  
-file = with File "favorite_foods.txt"   -- return created object
-  \set_encoding "utf8"
-  
-create_person = (name,  relatives) ->
-  with Person!
-    .name = name
-    \add_relative relative for relative in *relatives
+MY_CONSTANT = "hello"
 
-me = create_person "Leaf", {dad, mother, sister}
+my_function = -> print "the function"
+my_second_function = -> print "another function"
 
-with str = "Hello"
-  print "original:", str
-  print "upper:", \upper!
-```
-
-### Do
-
-Do can be used to limit scope:
-
-```moon
-do
-  var = "hello"
-  print var
-print var -- nil here
-```
-
-It can also be used as an expression:
-
-```moon
-counter = do
-  i = 0
-  ->
-    i += 1
-    i
-
-print counter!      -- 1
-print counter!      -- 2
-
-tbl = {
-  key: do
-    print "assigning key!"
-    1234
-}
+{ :my_function, :my_second_function, :MY_CONSTANT}
 ```
 
 
@@ -835,21 +876,81 @@ for {left, right} in *tuples
   print left, right
 ```
 
+
+Using
+-----
+
+The following may not behave as expected.
+
 ```moon
+i = 100
+
+-- many lines of code...
+
+my_func = ->
+  i = 10            -- name clash
+  while i > 0
+    print i
+    i -= 1
+
+my_func!
+
+print i             -- will print 0?!
+```
+
+The reason being that `i` in the function has been seen before, i.e. it is 
+declared at `i = 100`. This could be fixed by specifying `local i` before
+`i = 10` in the function.
+
+This problem can be avoided by specifying which external variables 
+we are `using`. Everything else is then declared *local*.
+
+`using nil` means "using no external variables".
+
+```moon
+i = 100
+
+my_func = (using nil) ->
+  i = "hello" -- a new local variable is created here
+
+my_func!
+print i -- prints 100, i is unaffected
 ```
 
 ```moon
+tmp = 1213
+i, k = 100, 50
+
+my_func = (add using k,i) ->
+  tmp = tmp + add   -- a new local tmp is created
+  i += tmp          -- using external i
+  k += tmp          -- using external k
+
+my_func(22)
+print i,k -- these have been updated
 ```
+
+
+Idioms
+------
+
+### Function stubs
+
+Functions from objects may be passed around, using a closure.
 
 ```moon
+my_object = {
+  value: 1000
+  write: => print "the value:", @value
+}
+
+run_callback = (func) ->
+  print "running callback..."
+  func!
+
+run_callback my_object.write    -- fail: function has no reference to my_object
+
+run_callback my_object\write    -- pass: object bundled into a new function
 ```
 
-```moon
-```
-
-Last
-----
-
-```moon
-```
 
