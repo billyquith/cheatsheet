@@ -294,5 +294,5 @@ References
 ----------
 
 - [BASH reference manual](https://www.gnu.org/software/bash/manual/bash.html).
-
-
+- [Grymoire](http://www.grymoire.com/Unix/index.html) - intro to UNIX concepts
+- [ss64 UNIX commands](http://ss64.com/bash/) - help on each command
