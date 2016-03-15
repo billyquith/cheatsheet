@@ -168,7 +168,7 @@ Variables
 - `$1-$N` :: Stores the arguments (variables) that were passed to the shell program from the command line.
 - `$?`    :: Stores the exit value of the last command that was executed.
 - `$0`    :: Stores the first word of the entered command (the name of the shell program).
-- `$*`    :: Stores all the arguments that were entered on the command line ($1 $2 ...).
+- `$*`    :: Stores all the arguments that were entered on the command line `($1 $2 ...)`.
 - `"$@"`  :: Stores all the arguments that were entered on the command line, individually quoted ("$1" "$2" ...).
 
 #### Shell Parameter Expansion
@@ -182,6 +182,10 @@ Variables
 
 - `${parameter:offset}`         :: All characters after offset.
 - `${parameter:offset:length}`  :: All characters after offset for length.
+
+#### Useful 
+
+* `SCRIPTPATH=$( cd $(dirname $0) ; pwd -P )` - Path of current script.
 
 #### set
 
@@ -257,7 +261,6 @@ TIME: 13:36:16
 %::z | +hh:mm:ss numeric time zone (e.g., -04:00:00)
 %:::z | numeric time zone with : to necessary precision (e.g., -04, +05:30)
 %Z | alphabetic time zone abbreviation (e.g., EDT)
-
 
 
 Keyboard
