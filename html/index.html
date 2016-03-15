@@ -136,7 +136,19 @@
       // make popovers for notes referenced
       $('#csdoc note')
         .replaceWith(function(){
-          return notePopOver($(this).attr('ref'), csnotes);
+          var ref = $(this).attr('ref');
+          console.log('ref ' + ref);
+          
+          if (typeof ref == 'undefined') {  // no ref, inline
+            return notePopOver(glyph('file'), "Note:", $(this).html());
+          }
+          
+          var nref = ref.toLowerCase();
+          if (!(nref in csnotes)) {  // bad/undefined ref name
+            return '<span class="note-unknown">e.g. ref undefined: "' + ref + '"</span>';
+          }        
+          
+          return notePopOver(glyph('file'), ref, csnotes[nref]);
         });
         
       // open external links in a new tab
@@ -148,19 +160,16 @@
     
     // reformat note as popover in HTML
     // - this is necessary as can't use inline string (data-content)
-    function notePopOver(name, csnotes)
+    function notePopOver(reftext, title, content)
     {
-      var note = name.toLowerCase();
-      if (!(note in csnotes)) {
-        return '<span class="note-unknown">e.g. unknown: "' + name + '"</span>';
-      }
-      var ntitle = name;
-      var content = csnotes[note];
-      var trigger =
-        '<a href="#" class="potrigger"><span class="glyphicon glyphicon-file"></span></a>';
-      var head = '<div class="pohead hide">' + ntitle + '</div>';
-      var content = '<div class="pocontent hide">' + content + '</div>';
-      return '<span class="popover-markup">' + trigger + head + content + '</span>';
+      var trigger = '<a href="#" class="potrigger">' + reftext + '</a>';
+      var pohead = '<div class="pohead hide">' + title + '</div>';
+      var pocont = '<div class="pocontent hide">' + content + '</div>';
+      return '<span class="popover-markup">' + trigger + pohead + pocont + '</span>';
+    }
+    
+    function glyph(name) {
+      return '<span class="glyphicon glyphicon-' + name + '"></span>';
     }
     
     function escapeHtml(unsafe) {

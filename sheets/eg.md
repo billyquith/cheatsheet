@@ -10,7 +10,7 @@ Formatting
 - Some useful information *in italics* and **in bold**.
 - `int itCode();` in here.
 - <kbd>Ctrl</kbd> + <kbd>A</kbd> is for 'orses.
-- Example: <note ref="A test"/> <note ref="Code test"/>
+- Notes: <note ref="A test"/> <note ref="Code test"/> <note>Inline note</note>
 
 
 #### Sub heading
