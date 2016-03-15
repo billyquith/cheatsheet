@@ -10,7 +10,7 @@ Formatting
 - Some useful information *in italics* and **in bold**.
 - `int itCode();` in here.
 - <kbd>Ctrl</kbd> + <kbd>A</kbd> is for 'orses.
-- Example: <eg name="A test"/> <eg name="Code test"/>
+- Example: <note ref="A test"/> <note ref="Code test"/>
 
 
 #### Sub heading
@@ -36,7 +36,7 @@ France | medium | cheese
 
 This is an extension, lists with splits, for values-comments:
 
-- `RGB(255,0,0)` <eg name="colours"/> :: red
+- `RGB(255,0,0)` <note ref="colours"/> :: red
 - `RGB(0,255)`    :: green
 - `RGB(0,0,255)`  :: blue
 
@@ -180,10 +180,10 @@ comment ]==]
 ]] ]=] ]==]
 ```
 
-Examples
---------
+Notes
+-----
 
-<egs/>
+<notes/>
 
 #### A test
 

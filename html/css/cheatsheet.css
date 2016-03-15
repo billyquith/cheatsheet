@@ -141,12 +141,21 @@ pre { font-size:0.9em; }
     margin: 2px;
 }
 
-.egunknown {
+.popover {
+    max-width: 100%; /* depends on container! required or code wraps */
+}
+
+.note-unknown {
     background-color: #aa0000;
     color: white;
     padding: 5px;
 }
 
-.popover {
-    max-width: 100%; /* depends on container! required or code wraps */
+.csnote {
+    border-width: 1px;
+    border-color: lightblue;
+    border-style:dashed;
+    border-radius: 5px;
+    padding: 1em;    
 }
+

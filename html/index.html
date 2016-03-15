@@ -114,30 +114,29 @@
         $('#csdoc h2').each(function(){
         });      
 
-      // pre-process the examples
-      $('#csdoc egs') // look for section containing <egs/>
+      // pre-process the notes
+      $('#csdoc notes') // look for section containing <notes/>
         .parent()
-        .addClass('egsection')
+        .addClass('csnotes')
         .children('h4')
         .each(function(){
-          var egtitle = $(this).text();
-          var egname = egtitle;
-          $(this).nextUntil('h4').wrapAll('<div class="cseg" egname="' + egname + '"></div>');
+          var note = $(this).text();
+          $(this).nextUntil('h4').wrapAll('<div class="csnote" name="' + note + '"></div>');
         });
 
-      // record the examples
-      var egs = new Object();
-      $('#csdoc div.cseg')
+      // record the notes
+      var csnotes = new Object();
+      $('#csdoc div.csnote')
         .each(function(){
-          var egname = $(this).attr('egname').toLowerCase();
+          var note = $(this).attr('name').toLowerCase();
           var content = $(this).html();
-          egs[egname] = content;
+          csnotes[note] = content;
         });
       
-      // make popovers for examples referenced
-      $('#csdoc eg')
+      // make popovers for notes referenced
+      $('#csdoc note')
         .replaceWith(function(){
-          return egPopOver($(this).attr('name'), egs);
+          return notePopOver($(this).attr('ref'), csnotes);
         });
         
       // open external links in a new tab
@@ -147,19 +146,19 @@
         }).attr('target', '_blank');        
     }
     
-    // reformat example as popover in HTML
+    // reformat note as popover in HTML
     // - this is necessary as can't use inline string (data-content)
-    function egPopOver(name, egs)
+    function notePopOver(name, csnotes)
     {
-      var egname = name.toLowerCase();
-      if (!(egname in egs)) {
-        return '<span class="egunknown">e.g. unknown: "' + name + '"</span>';
+      var note = name.toLowerCase();
+      if (!(note in csnotes)) {
+        return '<span class="note-unknown">e.g. unknown: "' + name + '"</span>';
       }
-      var egtitle = name;
-      var content = egs[egname];
+      var ntitle = name;
+      var content = csnotes[note];
       var trigger =
         '<a href="#" class="potrigger"><span class="glyphicon glyphicon-file"></span></a>';
-      var head = '<div class="pohead hide">' + egtitle + '</div>';
+      var head = '<div class="pohead hide">' + ntitle + '</div>';
       var content = '<div class="pocontent hide">' + content + '</div>';
       return '<span class="popover-markup">' + trigger + head + content + '</span>';
     }
@@ -208,7 +207,6 @@
             return $(this).parent().find('.pocontent').html();
           },
           container: 'body',
-          viewport: 'body',
           placement: 'bottom',
           trigger:'hover'
       });
