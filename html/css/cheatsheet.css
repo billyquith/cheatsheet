@@ -107,11 +107,11 @@ pre { font-size:0.9em; }
   width: 95%;
 }
 
-#sheetinfo h3 { margin-top: 2em; }
-#sheetinfo h4 { margin-top: 2em; }
-#sheetinfo h5 { margin-top: 1em; }
+#csshowing h3 { margin-top: 2em; }
+#csshowing h4 { margin-top: 2em; }
+#csshowing h5 { margin-top: 1em; }
 
-#sheetinfo > div > :first-child { margin-top: 0px; }  /* no space at top */
+#csshowing > div > :first-child { margin-top: 0px; }  /* no space at top */
 
 .vals-list {
   /*border-style: dotted;*/
@@ -141,3 +141,12 @@ pre { font-size:0.9em; }
     margin: 2px;
 }
 
+.egunknown {
+    background-color: #aa0000;
+    color: white;
+    padding: 5px;
+}
+
+.popover {
+    max-width: 100%; /* depends on container! required or code wraps */
+}

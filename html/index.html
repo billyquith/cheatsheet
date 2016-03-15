@@ -11,14 +11,15 @@
 
     <title>Cheatsheets</title>
 
-    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="styles/github.css" rel="stylesheet">
-    <link href="cheatsheet.css" rel="stylesheet">
+    <link href="css/cheatsheet.css" rel="stylesheet">
   </head>
 
   <body>
     
-    <div style="display: none" id="sheetmarked"></div>
+    <!-- Placeholder store for transformed document -->
+    <div class="hide" id="csdoc"></div>
     
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
@@ -51,7 +52,7 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <div id="sheetinfo"></div>
+            <div id="csshowing"></div>
         </div>
       </div>
     </div>
@@ -81,53 +82,110 @@
 
     function transformDoc()
     {
-      // set title
-      $('.navbar-brand').empty(); $('.navbar-brand').append('Cheatsheet: ' +
-      $('#sheetmarked h1').text());
+      // set title in title bar
+      $('.navbar-brand').empty();
+      $('.navbar-brand').append('Cheatsheet: ' + $('#csdoc h1').text());
 
-      // don't need cheatsheet title
-      $('#sheetmarked h1').remove();
+      // don't need title in text as in title bar
+      $('#csdoc h1').remove();
 
       // group all items between h2 sections
-      $('#sheetmarked h2').each(function(){
-         $(this).nextUntil('h2').wrapAll('<div></div>');      
+      $('#csdoc h2').each(function(){
+         $(this).nextUntil('h2').wrapAll('<div></div>');
       });      
 
       // table markup
-      $('#sheetmarked table').addClass('table table-striped table-bordered table-condensed');
+      $('#csdoc table').addClass('table table-striped table-bordered table-condensed');
 
       // tranform ul lists containing '::' splitters into list groups
-      $('#sheetmarked ul > li:contains( :: )')
+      $('#csdoc ul > li:contains( :: )')
         .parent()
         .addClass('vals-list')
         .children('li')
-		.each(function() {
-			var txt = $(this).html();
-			var info = txt.split(' :: ');
-			$(this).replaceWith('<div class="row">'
-								+ '<div class="col-md-3 vals-value">'+info[0]+'</div>'
-								+ '<div class="col-md-8 vals-comment">'+ info[1]+'</div></div>');
-		});
+        .each(function() {
+          var txt = $(this).html();
+          var info = txt.split(' :: ');
+          $(this).replaceWith('<div class="row">'
+          + '<div class="col-md-3 vals-value">'+info[0]+'</div>'
+          + '<div class="col-md-8 vals-comment">'+ info[1]+'</div></div>');
+        });
 
+        // group all items between h2 sections
+        $('#csdoc h2').each(function(){
+        });      
+
+      // pre-process the examples
+      $('#csdoc egs') // look for section containing <egs/>
+        .parent()
+        .addClass('egsection')
+        .children('h4')
+        .each(function(){
+          var egtitle = $(this).text();
+          var egname = egtitle;
+          $(this).nextUntil('h4').wrapAll('<div class="cseg" egname="' + egname + '"></div>');
+        });
+
+      // record the examples
+      var egs = new Object();
+      $('#csdoc div.cseg')
+        .each(function(){
+          var egname = $(this).attr('egname').toLowerCase();
+          var content = $(this).html();
+          egs[egname] = content;
+        });
+      
+      // make popovers for examples referenced
+      $('#csdoc eg')
+        .replaceWith(function(){
+          return egPopOver($(this).attr('name'), egs);
+        });
+        
       // open external links in a new tab
-      $('#sheetmarked a').filter(function() {
+      $('#csdoc a')
+        .filter(function() {
           return this.hostname != window.location.hostname;
-      }).attr('target', '_blank');
+        }).attr('target', '_blank');        
+    }
+    
+    // reformat example as popover in HTML
+    // - this is necessary as can't use inline string (data-content)
+    function egPopOver(name, egs)
+    {
+      var egname = name.toLowerCase();
+      if (!(egname in egs)) {
+        return '<span class="egunknown">e.g. unknown: "' + name + '"</span>';
+      }
+      var egtitle = name;
+      var content = egs[egname];
+      var trigger =
+        '<a href="#" class="potrigger"><span class="glyphicon glyphicon-file"></span></a>';
+      var head = '<div class="pohead hide">' + egtitle + '</div>';
+      var content = '<div class="pocontent hide">' + content + '</div>';
+      return '<span class="popover-markup">' + trigger + head + content + '</span>';
+    }
+    
+    function escapeHtml(unsafe) {
+        return unsafe
+             .replace(/&/g, "&amp;")
+             .replace(/</g, "&lt;")
+             .replace(/>/g, "&gt;")
+             .replace(/"/g, "&quot;")
+             .replace(/'/g, "&#039;");
     }
 
     function showSectionChoice() {
-      $('#sheetmarked h2').filter(function() {
+      $('#csdoc h2').filter(function() {
         if ($(this).text() == g_sectchoice) {
           // show section
-          $('#sheetinfo').empty();
-          $(this).next().clone().appendTo('#sheetinfo');
+          $('#csshowing').empty();
+          $(this).next().clone().appendTo('#csshowing');
         }
       });
     }
 
     function showAllSections() {
-      $('#sheetinfo').empty();
-      $('#sheetmarked').children().clone().appendTo('#sheetinfo');
+      $('#csshowing').empty();
+      $('#csdoc').children().clone().appendTo('#csshowing');
     }
 
     function updateView() {
@@ -139,6 +197,21 @@
         $('.sidebar:hidden').show();
         showSectionChoice();
       }
+
+      // I don't think we can copy popovers so need to format here.
+      $('.popover-markup > .potrigger').popover({
+          html : true,
+          title: function() {
+            return $(this).parent().find('.pohead').html();
+          },
+          content: function() {
+            return $(this).parent().find('.pocontent').html();
+          },
+          container: 'body',
+          viewport: 'body',
+          placement: 'bottom',
+          trigger:'hover'
+      });
     }
 
     $(document).ready(function()
@@ -168,12 +241,12 @@
       try {
         console.log('requesting: ' + cheatFileUrl);
         $.get(cheatFileUrl, function(data) {
-          var doc = marked(data);
-          $('#sheetmarked').append(doc);
+          var doc = marked(data);  // transform markdown
+          $('#csdoc').append(doc);
           transformDoc();
-
+          
           // populate sidebar
-          $('#sheetmarked h2').each(function() {
+          $('#csdoc h2').each(function() {
             $('#cheatsections').append('<li><a href="#">' + $(this).text() + '</a></li>');
           });
           $('#cheatsections a').click(function(e) {
@@ -197,7 +270,7 @@
           });
 
           // select first section by default
-          g_sectchoice = $('#sheetmarked h2').first().text();
+          g_sectchoice = $('#csdoc h2').first().text();
           $('#cheatsections li').first().addClass('active');
 
           hljs.initHighlighting(); // apply code highlighting

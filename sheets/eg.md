@@ -10,6 +10,8 @@ Formatting
 - Some useful information *in italics* and **in bold**.
 - `int itCode();` in here.
 - <kbd>Ctrl</kbd> + <kbd>A</kbd> is for 'orses.
+- Example: <eg name="A test"/> <eg name="Code test"/>
+
 
 #### Sub heading
 
@@ -34,7 +36,7 @@ France | medium | cheese
 
 This is an extension, lists with splits, for values-comments:
 
-- `RGB(255,0,0)`  :: red
+- `RGB(255,0,0)` <eg name="colours"/> :: red
 - `RGB(0,255)`    :: green
 - `RGB(0,0,255)`  :: blue
 
@@ -87,7 +89,9 @@ Shortcut                       | Comment
 Code
 ----
 
-Some BASH:
+#### Some BASH
+
+This is a BASH example.
 
 ```bash
 #!/bin/bash
@@ -122,7 +126,7 @@ genApacheConf(){
 }
 ```
 
-Some Python:
+#### Some Python
 
 ```python
 @requires_authorization
@@ -139,7 +143,7 @@ class SomeClass:
 ... prompt'''
 ```
 
-Some Lua:
+#### Some Lua
 
 ```lua
 --[[
@@ -175,6 +179,30 @@ comment ]==]
 [[ string
 ]] ]=] ]==]
 ```
+
+Examples
+--------
+
+<egs/>
+
+#### A test
+
+Test "with quotes" **bold**
+
+#### Code test
+
+```lua
+if something then
+  -- do something
+  local function create_signal()
+      return setmetatable({}, signal_mt)
+  end
+end
+```
+
+#### colours
+
+<span style="background-color: red; padding: 5px">red</span>
 
 
 Useful links
