@@ -173,10 +173,12 @@ Variables
 
 #### Shell Parameter Expansion
 
-- `${parameter:-word}` :: If parameter is unset or null, the expansion of word is substituted. Otherwise, the value of parameter is substituted.- 
-- `${parameter:=word}` :: If parameter is unset or null, the expansion of word is assigned to parameter. The value of parameter is then substituted. Positional parameters and special parameters may not be assigned to in this way.
-- `${parameter:?word}` :: If parameter is null or unset, the expansion of word (or a message to that effect if word is not present) is written to the standard error and the shell, if it is not interactive, exits. Otherwise, the value of parameter is substituted.
-- `${parameter:+word}` :: If parameter is null or unset, nothing is substituted, otherwise the expansion of word is substituted.
+Expression | Comment
+---------- | -------
+ `${parameter:-word}` | If parameter is unset or null, the expansion of word is substituted. Otherwise, the value of parameter is substituted. <note ref="spe1"/>
+`${parameter:=word}` | If parameter is unset or null, the expansion of word is assigned to parameter. The value of parameter is then substituted. Positional parameters and special parameters may not be assigned to in this way.
+`${parameter:?word}` | If parameter is null or unset, the expansion of word (or a message to that effect if word is not present) is written to the standard error and the shell, if it is not interactive, exits. Otherwise, the value of parameter is substituted.
+`${parameter:+word}` | If parameter is null or unset, nothing is substituted, otherwise the expansion of word is substituted.
 
 #### Substrings
 
@@ -299,3 +301,17 @@ References
 - [BASH reference manual](https://www.gnu.org/software/bash/manual/bash.html).
 - [Grymoire](http://www.grymoire.com/Unix/index.html) - intro to UNIX concepts
 - [ss64 UNIX commands](http://ss64.com/bash/) - help on each command
+
+
+Notes
+-----
+
+<notes/>
+
+#### spe1
+
+```bash
+VAR=${1:-'default'}
+```
+
+
