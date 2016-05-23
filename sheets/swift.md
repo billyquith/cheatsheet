@@ -28,16 +28,26 @@ shoppingList[1] = "bottle of water"               // update
 shoppingList.count                                // size of array (3)
 shoppingList.append("eggs")
 shoppingList += ["Milk"]
+```
 
-// Array slicing
+Array slicing
+
+```
 var fibList = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 5]
-fibList[4..<6] // [3, 5]. Note: the end range value is exclusive
+fibList[4..<6]                    // [3, 5]. Note: the end range value is exclusive
 fibList[0..<(fibList.endIndex-1)] // all except last item
-// Subscripting returns the Slice type, instead of the Array type.
-// You may need to cast it to Array in order to satisfy the type checker
-Array(fibList[0..<4])
+```
 
-// Variants of creating an array. All three are equivalent.
+Subscripting returns the Slice type, instead of the Array type.
+You may need to cast it to Array in order to satisfy the type checker
+
+```
+Array(fibList[0..<4])
+```
+
+Variants of creating an array. All three are equivalent.
+
+```
 var emptyArray1 = [String]()
 var emptyArray2: [String] = []
 var emptyArray3: [String] = [String]()
@@ -58,6 +68,10 @@ var emptyDictionary = Dictionary<String, Float>()
 Control Flow
 ------------
 
+### for
+
+Over an array:
+
 ```
 let myArray = [1, 1, 2, 3, 5]
 for value in myArray {              // for loop (array)
@@ -67,7 +81,11 @@ for value in myArray {              // for loop (array)
         println("Not one!")
     }
 }
+```
 
+Over a dictionary:
+
+```
 var dict = [
     "name": "Steve Jobs",
     "title": "CEO",
@@ -76,17 +94,21 @@ var dict = [
 for (key, value) in dict {          // for loop (dictionary)
     println("\(key): \(value)")
 }
+```
 
+Ranged. Use `..` to exclude the last item.
+
+```
 for i in -1...1 { // [-1, 0, 1]     // for loop (range)
     println(i)
 }
-// use .. to exclude the last number
 
-// for loop (ignoring the current value of the range on each iteration of the loop)
-for _ in 1...3 {
+for _ in 1...3 {                    // for loop (ignoring iterator)
     // Do something three times.
 }
 ```
+
+### While
 
 ```
 var i = 1
@@ -95,11 +117,17 @@ while i < 1000 {            // while loop
 }
 ```
 
+### Do While
+
 ```
 do {                        // do-while loop
     println("hello")
 } while 1 == 2
 ```
+
+### Switch
+
+Note, no fallthrough.
 
 ```
 let vegetable = "red pepper"
@@ -136,28 +164,38 @@ switch (city["name"], city["population"], city["abbr"]) {
 Functions
 ---------
 
+### Functions
+
 Functions are a first-class type, meaning they can be nested in functions and can be 
-passed around:
+passed around.
 
 ```
-// Function that returns a String
 func greet(name: String, day: String) -> String {
     return "Hello \(name), today is \(day)."
 }
 greet("Bob", "Tuesday") // call the greet function
+```
 
-// Function that returns multiple items in a tuple
+Function that returns multiple items in a tuple
+
+```
 func getGasPrices() -> (Double, Double, Double) {
     return (3.59, 3.69, 3.79)
 }
+```
 
-// Function that takes variable number of arguments, collecting them into an array
+Function that takes variable number of arguments, collecting them into an array
+
+```
 func setup(numbers: Int...) {
     // do something
 }
 setup(5, 16, 38) // call the setup function with array of inputs
+```
 
-// Nested functions can organize code that is long or complex
+Nested functions can organize code that is long or complex
+
+```
 func printWelcomeMessage() -> String {
     var y = "Hello,"
     func add() {
@@ -167,8 +205,11 @@ func printWelcomeMessage() -> String {
     return y
 }
 printWelcomeMessage() // Hello world
+```
 
-// Passing and returning functions
+Passing and returning functions
+
+```
 func makeIncrementer() -> (Int -> Int) {
     func addOne(number: Int) -> Int {
         return 1 + number
@@ -254,13 +295,13 @@ class Square: Shape {
         return sideLength * sideLength
     }
 }
+
 var mySquare = Square(sideLength: 5)
 print(mySquare.getArea()) // 25
 mySquare.shrink()
 print(mySquare.sideLength) // 4
 
-// Access the Square class object,
-// equivalent to [Square class] in Objective-C.
+// Access the Square class object, equivalent to [Square class] in Objective-C.
 Square.self
 
 //example for 'willSet' and 'didSet'
@@ -276,6 +317,7 @@ class StepCounter {
         }
     }
 }
+
 var stepCounter = StepCounter()
 stepCounter.totalSteps = 100 // About to set totalSteps to 100 \n Added 100 steps to 'totalSteps'
 stepCounter.totalSteps = 145 // About to set totalSteps to 145 \n Added 45 steps to 'totalSteps'
@@ -344,21 +386,28 @@ extension Array {
 You can overwrite existing operators or define new operators for existing or custom types.
 
 ```
-// Overwrite existing types
-@infix func + (a: Int, b: Int) -> Int {
+@infix func + (a: Int, b: Int) -> Int {   // Overwrite existing types
     return a - b
 }
 var x = 5 + 4 // x is 1
-You can't overwrite the = operator
-Add operators for new types
+```
+
+*You can't overwrite the `=` operator.* Add operators for new types:
+
+```
 struct Vector2D {
     var x = 0.0, y = 0.0
 }
+
 @infix func + (left: Vector2D, right: Vector2D) -> Vector2D {
     return Vector2D(x: left.x + right.x, y: left.y + right.y)
 }
-Operators can be prefix, infix, or postfix.
-You have to add @assignment if you wish to define compound assignment operators like +=, ++ or -=
+```
+
+Operators can be prefix, infix, or postfix. You have to add `@assignment` if you wish 
+to define compound assignment operators like `+=`, `++` or `-=`.
+
+```
 @assignment func += (inout left: Vector2D, right: Vector2D) {
     left = left + right
 }
