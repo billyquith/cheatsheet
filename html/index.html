@@ -271,8 +271,6 @@
           g_sectchoice = $('#csdoc h2').first().text();
           $('#cheatsections li').first().addClass('active');
 
-          hljs.initHighlighting(); // apply code highlighting
-
           updateView();
         });
       } catch (e) {
@@ -281,28 +279,17 @@
     }
 
     $(document).ready(function(){
-      var options = {
-          opener: {
-               active: true,
-               close: './imgs/Remove2.png',
-               open: './imgs/Add2.png',
-               openerCss: {
-                   'display': 'inline-block',
-                   'width': '18px',
-                   'height': '18px',
-                   'float': 'left',
-                   'margin-left': '-35px',
-                   'margin-right': '5px',
-                   'background-position': 'center center',
-                   'background-repeat': 'no-repeat'
-               },
-               openerClass: ''
-          }
-      };
+      
+      marked.setOptions({
+        highlight: function (code) {
+          return hljs.highlightAuto(code).value;
+        }
+      });
       
       var sheetName = getURLParam('sheet') || 'eg';
       loadSheet(sheetName);
       
+      // sheet selection
       var esheets = $('#sheets_items');
       for (var i=0; i<sheets.length; ++i) {
         var item = '<li><a href="#" sheet="'+sheets[i]+'">'+capitise(sheets[i])+'</a></li>';
@@ -311,6 +298,7 @@
       esheets.append('<li role="separator" class="divider"></li>');
       esheets.append('<li><a href="#" sheet="eg">Example</a></li>');
       
+      // sheet selection action
       $('a[sheet]').each(function(){
         var lnk = $(this).attr('sheet');
         $(this).click(function(){
