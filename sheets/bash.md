@@ -40,12 +40,8 @@ esac
 ```
 
 ```bash
-# This executes once for each item in the list. This list can be a variable
-# that contains several words separated by spaces (such as output from ls
-# or cat), or it can be a list of values that is typed directly into the
-# statement. Each time through the loop, the variable var1 is assigned
-# the current item in the list, until the last one is reached.
-for VAR1 in LIST
+LIST="one two three"
+for VAR1 in $LIST
 do
     COMMANDS
 done
