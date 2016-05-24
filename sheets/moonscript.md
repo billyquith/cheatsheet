@@ -1,12 +1,12 @@
 Moonscript
 ==========  
 
-Introductory
+Introduction
 ------------
 
 ### About
 
-* These notes are for Moonscript version: 4.0
+* These notes are for Moonscript version: 0.4.0
 * [Website](http://moonscript.org)
 * [License](http://moonscript.org/reference/#license-mit) is MIT.
 * [Language reference](http://moonscript.org/reference/)
