@@ -9,11 +9,11 @@
     <meta name="author" content="">
     <link rel="icon" href="imgs/favicon.ico">
 
-    <title>Cheatsheets</title>
+    <title>Cheatsheet</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles/github.css" rel="stylesheet">
-    <link href="css/cheatsheet.css" rel="stylesheet">
+    <link href="html/css/bootstrap.min.css" rel="stylesheet">
+    <link href="html/styles/github.css" rel="stylesheet">
+    <link href="html/css/cheatsheet.css" rel="stylesheet">
   </head>
 
   <body>
@@ -55,10 +55,10 @@
       </div>
     </div>
 
-    <script src="jquery.min.js"></script>
-    <script src="bootstrap.min.js"></script>
-    <script src="marked.min.js"></script>
-    <script src="highlight.pack.js"></script>
+    <script src="html/jquery.min.js"></script>
+    <script src="html/bootstrap.min.js"></script>
+    <script src="html/marked.min.js"></script>
+    <script src="html/highlight.pack.js"></script>
     
     <script type="text/javascript">
     
@@ -227,7 +227,7 @@
     
     function loadSheet(sheetName)
     {
-      var cheatFileUrl = '../sheets/' + sheetName + '.md';      
+      var cheatFileUrl = 'sheets/' + sheetName + '.md';      
       try {
         // reset
         $('#csdoc').empty();
