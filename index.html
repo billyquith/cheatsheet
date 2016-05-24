@@ -27,7 +27,8 @@
           <!-- <a class="navbar-brand">Cheatsheet</a> -->
           <ul class="nav navbar-nav navbar-left" id="viewchoice">
             <li class="dropdown">
-              <a id="sheet_menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SHEET<span class="caret"></span></a>
+              <a id="sheet_menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                SHEET<span class="caret"></span></a>
               <ul id="sheets_items" class="dropdown-menu">
               </ul>
             </li>
@@ -80,7 +81,7 @@
         return null;
     }
     
-    function capitise(string) {
+    function capitalise(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
@@ -241,7 +242,8 @@
           transformDoc();
           
           // populate sheets available menu
-          $('#sheet_menu').text(capitise(sheetName));
+          $('#sheet_menu').text(capitalise(sheetName));
+          $('#sheet_menu').append('  <span class="caret"/>');
                               
           // populate sidebar
           $('#csdoc h2').each(function() {
@@ -292,7 +294,7 @@
       // sheet selection
       var esheets = $('#sheets_items');
       for (var i=0; i<sheets.length; ++i) {
-        var item = '<li><a href="#" sheet="'+sheets[i]+'">'+capitise(sheets[i])+'</a></li>';
+        var item = '<li><a href="#" sheet="'+sheets[i]+'">'+capitalise(sheets[i])+'</a></li>';
         esheets.append(item);
       }
       esheets.append('<li role="separator" class="divider"></li>');
