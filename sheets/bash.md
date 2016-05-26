@@ -93,7 +93,6 @@ do
 done
 ```
 
-
 ### Functions
 
 Functions are declared using syntax:
@@ -102,9 +101,7 @@ Functions are declared using syntax:
 [function] NAME [()] COMPOUND-COMMAND [ REDIRECTIONS ]
 ```
 
-#### Redirection
-
-Functions can have input and output redirected. E.g. when called,
+Functions can have input and output *redirected*. E.g. when called,
 *input* comes from`foo.in`, *output* to `foo.out`, and *error* to `foo.err`:
 
 ```bash
@@ -112,6 +109,44 @@ function foo() {
     COMMANDS;
 } < foo.in > foo.out 2> foo.err
 
+```
+
+
+Output
+------
+
+#### cat
+
+Synopsis: `cat [-benstuv] [file ...]`
+
+Print the contents of file1 to the standard output:
+
+```bash
+cat file1
+```
+
+Sequentially print the contents of file1 and file2 to the file file3, truncating file3 if it
+already exists.
+     
+```bash
+cat file1 file2 > file3
+```
+
+Print the contents of file1, print data it receives from the standard input until receive an
+`EOF` (`^D`) character, print the contents of file2, read and output contents of the standard input
+again, then finally output the contents of file3. 
+
+```bash
+cat file1 - file2 - file3
+```
+
+Write between markers, with redirection, to file1:
+
+```bash
+cat << EOM > file1
+This line will write to the file.
+${THIS} will also write to the file, with the variable contents substituted.
+EOM
 ```
 
 
