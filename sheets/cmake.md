@@ -24,9 +24,39 @@ Commands
 `set(<variable> <value>... [PARENT_SCOPE])`
 
 Set given `<variable>` in the current function or directory scope. If `PARENT_SCOPE` given variable
-set in scope above. Each new directory or function creates a new scope.
+set in scope above. Each new directory or function creates a new scope. 
 
 
+Targets
+-------
+
+### Library
+
+`add_library(<name> [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL] source1 [source2 ...])`
+[docs](https://cmake.org/cmake/help/latest/command/add_library.html)
+
+Adds library called `<name>` built from source files listed. `<name>` corresponds to the logical
+target name and must be globally unique within a project. `STATIC`, `SHARED`, or `MODULE` may be
+given to specify the type of library to be created.
+
+### Executable
+
+`add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL] source1 [source2 ...])`
+[docs](https://cmake.org/cmake/help/latest/command/add_executable.html)
+
+Adds executable called `<name>` to be built from the source files listed. `<name>` corresponds to
+the logical target name and must be globally unique within a project. The actual file name of the
+executable built is constructed based on conventions of the native platform (such as `<name>.exe`
+or just `<name>` ).
+
+By default the executable file will be created in the build tree directory corresponding to the
+source tree directory in which the command was invoked. See `RUNTIME_OUTPUT_DIRECTORY` target
+property to change this location. See `OUTPUT_NAME` target property to change the `<name>` part of
+the final file name.
+
+- If `WIN32` is given the property `WIN32_EXECUTABLE` will be set on the target created.
+- If `MACOSX_BUNDLE` is given the corresponding property will be set on the created target.
+- If `EXCLUDE_FROM_ALL` is given the corresponding property will be set on the created target.
 
 
 Flags
