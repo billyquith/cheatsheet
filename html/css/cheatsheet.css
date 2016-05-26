@@ -114,30 +114,37 @@ pre { font-size:0.9em; }
 #csshowing > div > :first-child { margin-top: 0px; }  /* no space at top */
 
 .vals-list {
-  /*border-style: dotted;*/
-  /*border-width: 1px;*/
-  /*border-color: #e0eaea;*/
-  /*border-radius: 8px;*/
-  padding: 1em 0 1em 0;
-  margin: 1em 6em 1em 4em;
+  padding: 5px;
+  margin: 2em 1em 1em 3em;
+  background-color: #fbfbfb;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #d0d0d0;
+  border-radius: 5px;  
 }
 
 .vals-list .row {
-  /*border-style: solid;*/
-  /*border-width: 0 0 1px 0;*/
-  /*border-color: #f00;*/
+  margin: 0
+}
+
+.vals-list .row:nth-child(even) {
+  background-color: #f0f0f0;
+}
+
+.vals-list .row:nth-child(odd) {
+  background-color: #fbfbfb;
 }
 
 .vals-value {
-    text-align: center;
-    vertical-align: middle;
-    border-color: #eef;
-    border-width: 0 0 0 2px;
-    border-style: solid;
+/*    vertical-align: middle;*/
+/*    border-color: #eef;*/
+/*    border-width: 0 0 0 2px;*/
+/*    border-style: solid;*/
+    font-weight: bold;
 }
 
 .vals-comment {
-    background-color: #f4f4f8;
+/*    background-color: #f4f4f8;*/
     margin: 2px;
 }
 
