@@ -136,10 +136,6 @@ pre { font-size:0.9em; }
 }
 
 .vals-value {
-/*    vertical-align: middle;*/
-/*    border-color: #eef;*/
-/*    border-width: 0 0 0 2px;*/
-/*    border-style: solid;*/
     font-weight: bold;
 }
 
@@ -166,3 +162,14 @@ pre { font-size:0.9em; }
     padding: 1em;    
 }
 
+code {
+  padding: 2px 4px;
+  font-size: 90%;
+  color: #aa3b3d;
+  background-color: #fcfcfc;
+  border-radius: 4px;
+  font-weight: bold;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #f0f0f0;
+}
