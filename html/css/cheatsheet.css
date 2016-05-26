@@ -140,7 +140,6 @@ pre { font-size:0.9em; }
 }
 
 .vals-comment {
-/*    background-color: #f4f4f8;*/
     margin: 2px;
 }
 
@@ -162,7 +161,8 @@ pre { font-size:0.9em; }
     padding: 1em;    
 }
 
-code {
+/* inline code. Needs specialisations to not break <pre><code> */
+p > code, li > code, div > code {
   padding: 2px 4px;
   font-size: 90%;
   color: #aa3b3d;
