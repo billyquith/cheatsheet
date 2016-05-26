@@ -116,7 +116,7 @@ pre { font-size:0.9em; }
 .vals-list {
   padding: 5px;
   margin: 2em 1em 1em 3em;
-  background-color: #fbfbfb;
+  background-color: #fdfdfd;
   border-style: solid;
   border-width: 1px;
   border-color: #d0d0d0;
@@ -128,11 +128,11 @@ pre { font-size:0.9em; }
 }
 
 .vals-list .row:nth-child(even) {
-  background-color: #f0f0f0;
+  background-color: #f4f4f6;
 }
 
 .vals-list .row:nth-child(odd) {
-  background-color: #fbfbfb;
+  background-color: #fdfdfd;
 }
 
 .vals-value {
