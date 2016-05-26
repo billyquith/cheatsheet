@@ -6,7 +6,9 @@ Commands
 
 ### message
 
-`message([<mode>] "message to display" ...)`
+```raw
+message([<mode>] "message to display" ...)
+```
   
 `<mode>`:
 
@@ -21,18 +23,69 @@ Commands
 
 ### set
 
-`set(<variable> <value>... [PARENT_SCOPE])`
+```raw
+set(<variable> <value>... [PARENT_SCOPE])
+```
+  
 
 Set given `<variable>` in the current function or directory scope. If `PARENT_SCOPE` given variable
 set in scope above. Each new directory or function creates a new scope. 
 
+### find_package
 
+```raw
+find_package(<package> [version] [EXACT] [QUIET] [MODULE]
+             [REQUIRED] [[COMPONENTS] [components...]]
+             [OPTIONAL_COMPONENTS components...]
+             [NO_POLICY_SCOPE])`
+```
+[docs](https://cmake.org/cmake/help/latest/command/find_package.html)
+
+Finds and loads settings from an external project (in "module mode"). `<package>_FOUND` set indicates found. `QUIET`
+disables messages if package not found. `MODULE` option disables the second signature. `REQUIRED`
+option stops processing with an error message if package not be found.
+
+A package-specific list of required components may be listed after the `COMPONENTS` option.
+Additional optional components may be listed after `OPTIONAL_COMPONENTS`.
+
+`[version]` argument requests a version with which the package found should be compatible (format
+is `major[.minor[.patch[.tweak]]]`). The `EXACT` option requests that the version be matched exactly.
+If no `[version]` and/or component list is given to a recursive invocation inside a find-module, the
+corresponding arguments are forwarded automatically from the outer call (including the `EXACT` flag
+for `[version]`). Version support is currently provided only on a package-by-package basis (details
+below).
+
+User code should generally look for packages using the above simple signature. See doc link for
+more complicated version. 
+
+The command has two modes by which it searches for packages: “Module” mode and “Config” mode.
+*Module mode* is available when the command is invoked with the above reduced signature. CMake
+searches for a file called `Find<package>.cmake` in the `CMAKE_MODULE_PATH` followed by the CMake
+installation. If the file is found, it is read and processed by CMake. It is responsible for
+finding the package, checking the version, and producing any needed messages. Many find-modules
+provide limited or no support for versioning; check the module documentation. If no module is found
+and the MODULE option is not given the command proceeds to Config mode.
+
+e.g.
+```cmake
+find_package(SDL 2.0 REQUIRED)
+if(SDL_FOUND)
+  include_directories(${SDL_INCLUDE_DIRS})
+  link_libraries(${SDL_LIBRARIES})
+endif()
+```
+             
+             
 Targets
 -------
 
 ### Library
 
-`add_library(<name> [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL] source1 [source2 ...])`
+```
+add_library(<name> [STATIC | SHARED | MODULE]
+            [EXCLUDE_FROM_ALL]
+            source1 [source2 ...])
+```
 [docs](https://cmake.org/cmake/help/latest/command/add_library.html)
 
 Adds library called `<name>` built from source files listed. `<name>` corresponds to the logical
@@ -41,7 +94,10 @@ given to specify the type of library to be created.
 
 ### Executable
 
-`add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL] source1 [source2 ...])`
+```
+add_executable(<name> [WIN32] [MACOSX_BUNDLE]
+               [EXCLUDE_FROM_ALL]
+               source1 [source2 ...])```
 [docs](https://cmake.org/cmake/help/latest/command/add_executable.html)
 
 Adds executable called `<name>` to be built from the source files listed. `<name>` corresponds to
