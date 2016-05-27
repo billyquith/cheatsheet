@@ -4,32 +4,14 @@ cmake
 Commands
 --------
 
-### message
 
-```raw
-message([<mode>] "message to display" ...)
+### add_definitions
+
 ```
-  
-`<mode>`:
-
-- (none)         :: Important information
-- STATUS         :: Incidental information
-- WARNING        :: CMake Warning, continue processing
-- AUTHOR_WARNING :: CMake Warning (dev), continue processing
-- SEND_ERROR     :: CMake Error, continue processing, but skip generation
-- FATAL_ERROR    :: CMake Error, stop processing and generation
-- DEPRECATION    :: CMake Deprecation Error or Warning if variable `CMAKE_ERROR_DEPRECATED` 
-  or `CMAKE_WARN_DEPRECATED` is enabled, respectively, else no message.
-
-### set
-
-```raw
-set(<variable> <value>... [PARENT_SCOPE])
+add_definitions(-DFOO -DBAR ...)
 ```
-  
 
-Set given `<variable>` in the current function or directory scope. If `PARENT_SCOPE` given variable
-set in scope above. Each new directory or function creates a new scope. 
+Adds definitions to the compiler command line for targets in the current directory and below.
 
 ### find_package
 
@@ -74,6 +56,33 @@ if(SDL_FOUND)
   link_libraries(${SDL_LIBRARIES})
 endif()
 ```
+
+### message
+
+```
+message([<mode>] "message to display" ...)
+```
+  
+`<mode>`:
+
+- (none)         :: Important information
+- STATUS         :: Incidental information
+- WARNING        :: CMake Warning, continue processing
+- AUTHOR_WARNING :: CMake Warning (dev), continue processing
+- SEND_ERROR     :: CMake Error, continue processing, but skip generation
+- FATAL_ERROR    :: CMake Error, stop processing and generation
+- DEPRECATION    :: CMake Deprecation Error or Warning if variable `CMAKE_ERROR_DEPRECATED` 
+  or `CMAKE_WARN_DEPRECATED` is enabled, respectively, else no message.
+
+### set
+
+```
+set(<variable> <value>... [PARENT_SCOPE])
+```
+  
+
+Set given `<variable>` in the current function or directory scope. If `PARENT_SCOPE` given variable
+set in scope above. Each new directory or function creates a new scope. 
              
              
 Targets
