@@ -83,6 +83,20 @@ set(<variable> <value>... [PARENT_SCOPE])
 
 Set given `<variable>` in the current function or directory scope. If `PARENT_SCOPE` given variable
 set in scope above. Each new directory or function creates a new scope. 
+
+### source_group
+
+```
+source_group(<name> [FILES <src>...] [REGULAR_EXPRESSION <regex>])
+```
+
+Group files in IDE folders. `<name>` may contain backslashes to specify subgroups:
+`source_group(outer\\inner ...)`
+
+- `FILES` :: Source files specified placed group `<name>`. Relative paths are interpreted with
+  respect to the current source directory.  
+- `REGULAR_EXPRESSION` :: File names matching the regex placed in group `<name>`. If matches
+  multiple groups, last group matching favored, if any.
              
              
 Targets
