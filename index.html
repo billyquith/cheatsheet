@@ -24,7 +24,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <!-- <a class="navbar-brand">Cheatsheet</a> -->
+          <a class="navbar-brand" href="https://github.com/billyquith/cheatsheet" target="_blank">Cheatsheet</a>
           <ul class="nav navbar-nav navbar-left" id="viewchoice">
             <li class="dropdown">
               <a id="sheet_menu" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -88,10 +88,6 @@
 
     function transformDoc()
     {
-      // set title in title bar
-      $('.navbar-brand').empty();
-      $('.navbar-brand').append('Cheatsheet: ' + $('#csdoc h1').text());
-
       // don't need title in text as in title bar
       $('#csdoc h1').remove();
 
@@ -281,8 +277,8 @@
       }      
     }
 
-    $(document).ready(function(){
-      
+    $(document).ready(function()
+    {      
       marked.setOptions({
         highlight: function (code) {
           return hljs.highlightAuto(code).value;
