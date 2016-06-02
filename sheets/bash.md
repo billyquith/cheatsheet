@@ -2,6 +2,15 @@
 BASH
 ====
 
+References
+----------
+
+- [BASH reference manual](https://www.gnu.org/software/bash/manual/bash.html).
+- [Grymoire](http://www.grymoire.com/Unix/index.html) - intro to UNIX concepts
+- [ss64 UNIX commands](http://ss64.com/bash/) - help on each command
+- [Shell Fu](http://www.shell-fu.org)
+
+
 Control
 -------
 
@@ -326,12 +335,77 @@ Shortcut                       | Comment
 <kbd>CTRL</kbd> + <kbd>Z</kbd> | stops the current command, resume with fg in the foreground or bg in the background
 
 
-References
-----------
+Tips
+----
 
-- [BASH reference manual](https://www.gnu.org/software/bash/manual/bash.html).
-- [Grymoire](http://www.grymoire.com/Unix/index.html) - intro to UNIX concepts
-- [ss64 UNIX commands](http://ss64.com/bash/) - help on each command
+### History
+
+Config (`.bashrc`):
+
+    shopt -s histappend
+    shopt -s cmdhist
+    export HISTCONTROL="erasedups:ignoreboth" # ignore duplicates
+    export HISTIGNORE="&:[ ]*:exit"
+    export HISTFILESIZE=500000
+    export HISTSIZE=10000
+
+Top 10 commands used:
+
+    history | awk '{print $2}' | awk 'BEGIN {FS="|"}{print $1}' | sort | uniq -c | sort -nr | head
+
+### Navigation
+
+Takes you to the previous directory you were in:
+
+    cd -
+    
+List only subdirectoies in current one:
+
+    ls -d */
+
+### Renaming
+
+Renaming/moving files with suffixes quickly:
+
+    cp /home/foo/realllylongname.cpp{,-old}
+
+This expands to:
+
+    cp /home/foo/realllylongname.cpp /home/foo/realllylongname.cpp-old
+    
+### Repeat
+
+Another favorite:
+
+`!!` and `!?` (matching) repeats your last command. E.g.
+
+```bash
+!!        # repeat
+sudo !!
+!?foo     # repeat last command starting with "foo"
+```
+    
+Print last command:
+
+    !!:p
+    !?foo?:p   # print last command starting with "foo"
+
+`^search^replace` takes the last command applying a search and replace:
+
+    $ ehco foo bar baz
+    bash: ehco: command not found
+    $ ^ehco^echo
+    foo bar baz
+    
+Run command with the previous command's arguments:
+
+    $ mkdir /tmp/new
+    $ cd !!:*
+
+
+### Sources
+
+- Stack Overflow [favourite BASH tricks](http://stackoverflow.com/q/68372/3233)
 
 
 Notes
