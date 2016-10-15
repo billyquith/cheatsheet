@@ -97,6 +97,12 @@ Group files in IDE folders. `<name>` may contain backslashes to specify subgroup
   respect to the current source directory.  
 - `REGULAR_EXPRESSION` :: File names matching the regex placed in group `<name>`. If matches
   multiple groups, last group matching favored, if any.
+
+To set folder for project once added:
+  
+```
+set_property(TARGET ${PROJ} PROPERTY FOLDER ${folder})
+```
              
              
 Targets
