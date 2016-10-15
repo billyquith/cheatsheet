@@ -115,17 +115,91 @@ in int gl_SampleMaskIn[];
 
 Some Fragment shader built-in inputs will take values specified by OpenGL, but these values can be overridden by user control.
 
+```glsl
 in float gl_ClipDistance[];
 in int gl_PrimitiveID;
+```
 
-gl_ClipDistance​
-This array contains the interpolated clipping plane half-spaces, as output for vertices from the last Vertex Processing stage.
-gl_PrimitiveID​
-This value is the index of the current primitive being rendered by this drawing command. This includes any Tessellation applied to the mesh, so each individual primitive will have a unique index.
-However, if a Geometry Shader is active, then the gl_PrimitiveID​ is exactly and only what the GS provided as output. Normally, gl_PrimitiveID​ is guaranteed to be unique, so if two FS invocations have the same primitive ID, they come from the same primitive. But if a GS is active and outputs non-unique values, then different fragment shader invocations for different primitives will get the same value. If the GS did not output a value for gl_PrimitiveID​, then the fragment shader gets an undefined value.
+- `gl_ClipDistance​`: This array contains the interpolated clipping plane half-spaces, as output
+  for vertices from the last Vertex Processing stage.
+- `gl_PrimitiveID​`: index of the current primitive being rendered by this drawing command. 
 
-Functions
----------
+**OpenGL 4.3+**:
+
+```glsl
+in int gl_Layer;
+in int gl_ViewportIndex;
+```
+
+- `gl_Layer​`: either 0 or the layer number for this primitive output by the Geometry Shader.
+- `gl_ViewportIndex​`: either 0 or the viewport index for primitive output by the Geometry Shader.
+
+#### Outputs
+
+```glsl
+layout(location = 1) out int materialID;
+layout(location = 4) out vec3 normal;
+layout(location = 0) out vec4 diffuseColor;
+layout(location = 3) out vec3 position;
+layout(location = 2) out vec4 specularColor;
+```
+
+
+Tips
+----
+
+### Use Swizzle
+
+```glsl
+gl_Position.x = in_pos.x;
+gl_Position.y = in_pos.y;
+```
+faster as:
+```glsl
+gl_Position.xy = in_pos.xy;
+```
+
+### MAD
+
+Use multiply-add, i.e. A*B + C.
+```glsl
+vec4 result1 = (value / 2.0) + 1.0;
+vec4 result2 = (1.0 + variable) * 0.5;
+
+// is more efficient as:
+vec4 result1 = (value * 0.5) + 1.0;     
+vec4 result2 = 0.5 * variable + 0.5;    // A*B + C
+```
+
+Swizzle can be combined:
+```glsl
+myOutputColor.xyz = myColor.xyz;
+myOutputColor.w = 1.0;
+gl_FragColor = myOutputColor;
+
+// or, better:
+const vec2 constantList = vec2(1.0, 0.0);
+gl_FragColor = mycolor.xyzw * constantList.xxxy + constantList.yyyx;
+```
+
+### Mix for lerp
+
+```glsl
+vec3 colorRGB_0, colorRGB_1;
+float alpha;
+resultRGB = colorRGB_0 * (1.0 - alpha) + colorRGB_1 * alpha;
+```
+
+better, MAD:
+```glsl
+resultRGB = colorRGB_0  + alpha * (colorRGB_1 - colorRGB_0);
+```
+
+best, `mix`:
+```glsl
+resultRGB = mix(colorRGB_0, colorRGB_1, alpha);
+```
+
 
 Types
 -----
@@ -238,6 +312,7 @@ Glossary
   parallel. An invocation within a work group may share data with other members of the same work
   group through shared variables and issue memory and control barriers to synchronize with other
   members of the same work group.
+
 
 ### Links
   
