@@ -2,6 +2,12 @@
 GLSL
 ====
 
+Vertex Shader
+-------------
+
+- [OpenGL wiki](https://www.opengl.org/wiki/Vertex_Shader)
+
+
 Fragment Shader
 ---------------
 
@@ -16,6 +22,8 @@ layout(pixel_center_integer) in vec4 gl_FragCoord;
 layout(origin_upper_left, pixel_center_integer) in vec4 gl_FragCoord;
 ```
 
+Functions
+---------
 
 Types
 -----
@@ -156,5 +164,8 @@ Glossary
   parallel. An invocation within a work group may share data with other members of the same work
   group through shared variables and issue memory and control barriers to synchronize with other
   members of the same work group.
+
+### Links
   
-Source: https://www.opengl.org/registry/doc/GLSLangSpec.4.40.pdf
+- Source for this doc: https://www.opengl.org/registry/doc/GLSLangSpec.4.40.pdf
+- [OpenGL wiki GLSL](https://www.opengl.org/wiki/OpenGL_Shading_Language)
