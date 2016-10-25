@@ -108,16 +108,20 @@ Targets
 add_library(<name> [STATIC | SHARED | MODULE]
             [EXCLUDE_FROM_ALL]
             source1 [source2 ...])
-```
+```cmake
 [docs](https://cmake.org/cmake/help/latest/command/add_library.html)
 
 Adds library called `<name>` built from source files listed. `<name>` corresponds to the logical
 target name and must be globally unique within a project. `STATIC`, `SHARED`, or `MODULE` may be
 given to specify the type of library to be created.
 
+- STATIC `.a`, object archive.
+- SHARED `.dylib`, dynamically loadable library.
+- MODULE `.so`, shared library module. OSX: `.bundle` plug-in.
+
 ### Executable
 
-```
+```cmake
 add_executable(<name> [WIN32] [MACOSX_BUNDLE]
                [EXCLUDE_FROM_ALL]
                source1 [source2 ...])```
@@ -137,15 +141,31 @@ the final file name.
 - If `MACOSX_BUNDLE` is given the corresponding property will be set on the created target.
 - If `EXCLUDE_FROM_ALL` is given the corresponding property will be set on the created target.
 
+### Flags
 
-Flags
------
-
-### C++11
+#### C++11
 
 Equivalent to `-std=c++11` but backward compatible for GCC 4.6 on Travic-CI.
 ```cmake
 add_definitions(-std=c++0x) 
+```
+
+### Output
+
+- `CMAKE_<TARGET>_OUTPUT_DIRECTORY`.
+- `ARCHIVE` is static library, `LIBRARY` is shared library, `RUNTIME` is executable.
+- *Note*, config is appended to this path, e.g. `Debug` (see below)
+
+```cmake
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTDIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTDIR}/lib)   # or `bin` so DLLs in executable dir 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTDIR}/bin)
+```
+
+- `<TARGET>_OUTPUT_DIRECTORY_<CONFIG>` : set full path for specific target configuration.
+  
+```cmake
+set_target_properties(myapp PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${OUTDIR}/bin)
 ```
 
 
