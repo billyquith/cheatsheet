@@ -110,11 +110,11 @@ Targets
 
 ### Library
 
-```
+```cmake
 add_library(<name> [STATIC | SHARED | MODULE]
             [EXCLUDE_FROM_ALL]
             source1 [source2 ...])
-```cmake
+```
 [docs](https://cmake.org/cmake/help/latest/command/add_library.html)
 
 Adds library called `<name>` built from source files listed. `<name>` corresponds to the logical
