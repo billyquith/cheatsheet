@@ -217,7 +217,7 @@ thing_copy = {k,v for k,v in pairs thing}       -- copy the table
 numbers = {1,2,3,4}
 sqrts = {i, math.sqrt i for i in *numbers}      -- use value iterator
 
-tuples = {{"hello", "world"}, {"foo", "bar"}}
+tuples = { {"hello", "world"}, {"foo", "bar"} }
 tbl = {unpack tuple for tuple in *tuples}       -- key,value pairs
 ```
 
