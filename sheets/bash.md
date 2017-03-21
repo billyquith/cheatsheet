@@ -120,6 +120,30 @@ function foo() {
 
 ```
 
+Input
+-----
+
+#### read
+
+Synopsis: `read [-ers] [-a aname] [-d delim] [-i text] [-n nchars] [-N nchars] [-p prompt] [-t timeout] [-u fd] [name …]` [docs](https://www.gnu.org/software/bash/manual/bash.html#index-read)
+
+- `-a aname` :: Words are assigned to array variable `aname`, starting at 0. All elements are removed from aname before the assignment. Other name arguments are ignored.
+- `-d delim` :: The first character of delim is used to terminate the input line, rather than newline.
+- `-e` :: Readline used to obtain line. 
+- `-i text` :: If Readline used, text placed into editing buffer before editing begins.
+- `-n nchars` :: read returns after reading nchars characters rather than waiting for a complete line of input, but honors a delimiter if fewer than nchars characters are read before the delimiter.
+- `-N nchars` :: read returns after exactly nchars characters, unless EOF is encountered or read times out. Delimiter chars are not special and do not cause read to return until nchars characters are read. Result is not split on the characters in IFS; the intent is that the variable is assigned exactly the characters read.
+- `-p prompt` :: Display prompt, without a trailing newline, before attempting to read any input. Prompt is displayed only if input is coming from a terminal.
+- `-r` :: If this option is given, backslash does not act as an escape character. The backslash is considered to be part of the line. In particular, a backslash-newline pair may not be used as a line continuation.
+- `-s` :: Silent mode. If input is coming from a terminal, characters are not echoed.
+- `-t timeout` :: Timeout after timeout seconds. Only effective if reading input from a terminal, pipe, or other special file; it has no effect when reading from regular files. If read times out, read saves any partial input read into the specified variable name. If timeout is 0, read returns immediately, without trying to read and data. The exit status is 0 if input is available on the specified file descriptor, non-zero otherwise. The exit status is greater than 128 if the timeout is exceeded.
+- `-u fd` :: Read input from file descriptor fd.
+
+```bash
+read -p "prompt> " VAR
+echo ${VAR:-"Nothing entered"}
+```
+
 
 Output
 ------
