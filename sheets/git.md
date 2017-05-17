@@ -125,7 +125,3 @@ Patching local files:
 
 - `git remote add URL`  :: Add new remote.
 
-
-```bash
-```
-

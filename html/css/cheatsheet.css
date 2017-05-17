@@ -98,13 +98,12 @@ body {
   border-radius: 50%;
 }
 
-/* cheatsheet ... */
+/*----------- cheatsheet -----------*/
 
 pre { font-size:0.9em; }
 
 .table {
-  margin-top: 1em;
-  margin-left: 2em;
+  margin: 1.5em 0 1.5em 1em;
   width: 95%;
 }
 
@@ -138,16 +137,15 @@ pre { font-size:0.9em; }
 /*.vals-list .row:nth-child(even) {
   background-color: #f4f4f6;
 }
-
 .vals-list .row:nth-child(odd) {
   background-color: #fdfdfd;
-}
-*/
+}*/
+
 .vals-value {
-    font-weight: bold;
-    color: green;
-    /* white-space:nowrap; */
-    /* text-align: center */
+  padding-left: 1em;
+  /* font-weight: bold;*/
+  /* white-space: nowrap; */
+  /* text-align: center */
 }
 
 .vals-comment {
