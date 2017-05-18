@@ -44,14 +44,20 @@
     </nav>
 
     <div class="container-fluid">
-      <div class="row">
+      <!-- show sections -->
+      <div class="row" id="show_sections" style="display:none">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar" id="cheatsections">
-            <!-- sections -->
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <div id="csshowing"></div>
+            <div id="cs_section"></div>
+        </div>
+      </div>
+      <!-- show all -->
+      <div class="row" id="show_all" style="display:none">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 main main_show_all">
+            <div id="cs_all"></div>
         </div>
       </div>
     </div>
@@ -64,7 +70,7 @@
     <script type="text/javascript">
     
     // TODO - automate this:
-    var sheets = ['bash','cmake', 'glsl', 'moonscript','swift', 'textmate'];
+    var sheets = ['bash','cmake', 'git', 'glsl', 'moonscript','swift', 'textmate'];
     
     var g_viewchoice = null;
     var g_sectchoice = null;
@@ -97,7 +103,7 @@
       });      
 
       // table markup
-      $('#csdoc table').addClass('table table-striped table-bordered table-condensed');
+      $('#csdoc table').addClass('table table-striped table-bordered');
 
       // tranform ul lists containing '::' splitters into list groups
       $('#csdoc ul > li:contains( :: )')
@@ -108,8 +114,8 @@
           var txt = $(this).html();
           var info = txt.split(' :: ');
           $(this).replaceWith('<div class="row">'
-          + '<div class="col-md-3 vals-value">'+info[0]+'</div>'
-          + '<div class="col-md-8 vals-comment">'+ info[1]+'</div></div>');
+          + '<div class="vals-value">'+info[0]+'</div>'
+          + '<div class="vals-comment">'+ info[1]+'</div></div>');
         });
 
       // group all items between h2 sections
@@ -187,24 +193,31 @@
       $('#csdoc h2').filter(function() {
         if ($(this).text() == g_sectchoice) {
           // show section
-          $('#csshowing').empty();
-          $(this).next().clone().appendTo('#csshowing');
+          $('#cs_section').empty();
+          $(this).next().clone().appendTo('#cs_section');
         }
       });
     }
 
     function showAllSections() {
-      $('#csshowing').empty();
-      $('#csdoc').children().clone().appendTo('#csshowing');
+      $('#cs_section').empty();
+      $('#cs_all').empty();
+      $('#csdoc').children().clone().appendTo('#cs_all');
     }
 
     function updateView() {
+      // swap
       if (g_viewchoice == 'all') {
-        $('.sidebar').hide();
+        // show all
+        $('#show_sections').attr('style', 'display:none');
+        $('#show_all').attr('style', 'display:block');
         showAllSections();
       }
       else {
-        $('.sidebar:hidden').show();
+        // show section
+        $('#cs_all').empty();
+        $('#show_all').attr('style', 'display:none');
+        $('#show_sections').attr('style', 'display:block');
         showSectionChoice();
       }
 
@@ -230,7 +243,6 @@
         // reset
         $('#csdoc').empty();
         $('#cheatsections').empty();
-        $('#csshowing').empty();        
         
         console.log('requesting: ' + cheatFileUrl);        
         $.get(cheatFileUrl, function(data) {

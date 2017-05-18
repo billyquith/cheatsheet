@@ -120,10 +120,30 @@ function foo() {
 
 ```
 
+
 Input
-------
+-----
 
 #### read
+
+Synopsis: `read [-ers] [-a aname] [-d delim] [-i text] [-n nchars] [-N nchars] [-p prompt] [-t timeout] [-u fd] [name …]` [docs](https://www.gnu.org/software/bash/manual/bash.html#index-read)
+
+- `-a aname` :: Words are assigned to array variable `aname`, starting at 0. All elements are removed from aname before the assignment. Other name arguments are ignored.
+- `-d delim` :: The first character of delim is used to terminate the input line, rather than newline.
+- `-e` :: Readline used to obtain line. 
+- `-i text` :: If Readline used, text placed into editing buffer before editing begins.
+- `-n nchars` :: read returns after reading nchars characters rather than waiting for a complete line of input, but honors a delimiter if fewer than nchars characters are read before the delimiter.
+- `-N nchars` :: read returns after exactly nchars characters, unless EOF is encountered or read times out. Delimiter chars are not special and do not cause read to return until nchars characters are read. Result is not split on the characters in IFS; the intent is that the variable is assigned exactly the characters read.
+- `-p prompt` :: Display prompt, without a trailing newline, before attempting to read any input. Prompt is displayed only if input is coming from a terminal.
+- `-r` :: If this option is given, backslash does not act as an escape character. The backslash is considered to be part of the line. In particular, a backslash-newline pair may not be used as a line continuation.
+- `-s` :: Silent mode. If input is coming from a terminal, characters are not echoed.
+- `-t timeout` :: Timeout after timeout seconds. Only effective if reading input from a terminal, pipe, or other special file; it has no effect when reading from regular files. If read times out, read saves any partial input read into the specified variable name. If timeout is 0, read returns immediately, without trying to read and data. The exit status is 0 if input is available on the specified file descriptor, non-zero otherwise. The exit status is greater than 128 if the timeout is exceeded.
+- `-u fd` :: Read input from file descriptor fd.
+
+```bash
+read -p "prompt> " VAR
+echo ${VAR:-"Nothing entered"}
+```
 
 
 Output
@@ -218,12 +238,10 @@ Variables
 
 #### Shell Parameter Expansion
 
-Expression | Comment
----------- | -------
- `${parameter:-word}` | If parameter is unset or null, the expansion of word is substituted. Otherwise, the value of parameter is substituted. <note ref="spe1"/>
-`${parameter:=word}` | If parameter is unset or null, the expansion of word is assigned to parameter. The value of parameter is then substituted. Positional parameters and special parameters may not be assigned to in this way.
-`${parameter:?word}` | If parameter is null or unset, the expansion of word (or a message to that effect if word is not present) is written to the standard error and the shell, if it is not interactive, exits. Otherwise, the value of parameter is substituted.
-`${parameter:+word}` | If parameter is null or unset, nothing is substituted, otherwise the expansion of word is substituted.
+- `${parameter:-word}` :: If parameter is unset or null, the expansion of word is substituted. Otherwise, the value of parameter is substituted. <note ref="spe1"/>
+- `${parameter:=word}` :: If parameter is unset or null, the expansion of word is assigned to parameter. The value of parameter is then substituted. Positional parameters and special parameters may not be assigned to in this way.
+- `${parameter:?word}` :: If parameter is null or unset, the expansion of word (or a message to that effect if word is not present) is written to the standard error and the shell, if it is not interactive, exits. Otherwise, the value of parameter is substituted.
+- `${parameter:+word}` :: If parameter is null or unset, nothing is substituted, otherwise the expansion of word is substituted.
 
 #### Substrings
 
@@ -263,51 +281,51 @@ TIME: 13:36:16
 
 %FORMAT String | Description
 -------------- | -----------
-%% | a literal %
-%a | locale’s abbreviated weekday name (e.g., Sun)
-%A | locale’s full weekday name (e.g., Sunday)
-%b | locale’s abbreviated month name (e.g., Jan)
-%B | locale’s full month name (e.g., January)
-%c | locale’s date and time (e.g., Thu Mar 3 23:05:25 2005)
-%C | century; like %Y, except omit last two digits (e.g., 21)
-%d | day of month (e.g, 01)
-%D | date; same as %m/%d/%y
-%e | day of month, space padded; same as %_d
-%F | full date; same as %Y-%m-%d
-%g | last two digits of year of ISO week number (see %G)
-%G | year of ISO week number (see %V); normally useful only with %V
-%h | same as %b
-%H | hour (00..23)
-%I | hour (01..12)
-%j | day of year (001..366)
-%k | hour ( 0..23)
-%l | hour ( 1..12)
-%m | month (01..12)
-%M | minute (00..59)
-%n | a newline
-%N | nanoseconds (000000000..999999999)
-%p | locale’s equivalent of either AM or PM; blank if not known
-%P | like %p, but lower case
-%r | locale’s 12-hour clock time (e.g., 11:11:04 PM)
-%R | 24-hour hour and minute; same as %H:%M
-%s | seconds since 1970-01-01 00:00:00 UTC
-%S | second (00..60)
-%t | a tab
-%T | time; same as %H:%M:%S
-%u | day of week (1..7); 1 is Monday
-%U | week number of year, with Sunday as first day of week (00..53)
-%V | ISO week number, with Monday as first day of week (01..53)
-%w | day of week (0..6); 0 is Sunday
-%W | week number of year, with Monday as first day of week (00..53)
-%x | locale’s date representation (e.g., 12/31/99)
-%X | locale’s time representation (e.g., 23:13:48)
-%y | last two digits of year (00..99)
-%Y | year
-%z | +hhmm numeric timezone (e.g., -0400)
-%:z | +hh:mm numeric timezone (e.g., -04:00)
-%::z | +hh:mm:ss numeric time zone (e.g., -04:00:00)
-%:::z | numeric time zone with : to necessary precision (e.g., -04, +05:30)
-%Z | alphabetic time zone abbreviation (e.g., EDT)
+ `%%` | a literal %
+ `%a` | locale’s abbreviated weekday name (e.g., Sun)
+ `%A` | locale’s full weekday name (e.g., Sunday)
+ `%b` | locale’s abbreviated month name (e.g., Jan)
+ `%B` | locale’s full month name (e.g., January)
+ `%c` | locale’s date and time (e.g., Thu Mar 3 23:05:25 2005)
+ `%C` | century; like %Y, except omit last two digits (e.g., 21)
+ `%d` | day of month (e.g, 01)
+ `%D` | date; same as %m/%d/%y
+ `%e` | day of month, space padded; same as %_d
+ `%F` | full date; same as %Y-%m-%d
+ `%g` | last two digits of year of ISO week number (see %G)
+ `%G` | year of ISO week number (see %V); normally useful only with %V
+ `%h` | same as %b
+ `%H` | hour (00..23)
+ `%I` | hour (01..12)
+ `%j` | day of year (001..366)
+ `%k` | hour ( 0..23)
+ `%l` | hour ( 1..12)
+ `%m` | month (01..12)
+ `%M` | minute (00..59)
+ `%n` | a newline
+ `%N` | nanoseconds (000000000..999999999)
+ `%p` | locale’s equivalent of either AM or PM; blank if not known
+ `%P` | like %p, but lower case
+ `%r` | locale’s 12-hour clock time (e.g., 11:11:04 PM)
+ `%R` | 24-hour hour and minute; same as %H:%M
+ `%s` | seconds since 1970-01-01 00:00:00 UTC
+ `%S` | second (00..60)
+ `%t` | a tab
+ `%T` | time; same as %H:%M:%S
+ `%u` | day of week (1..7); 1 is Monday
+ `%U` | week number of year, with Sunday as first day of week (00..53)
+ `%V` | ISO week number, with Monday as first day of week (01..53)
+ `%w` | day of week (0..6); 0 is Sunday
+ `%W` | week number of year, with Monday as first day of week (00..53)
+ `%x` | locale’s date representation (e.g., 12/31/99)
+ `%X` | locale’s time representation (e.g., 23:13:48)
+ `%y` | last two digits of year (00..99)
+ `%Y` | year
+ `%z` | +hhmm numeric timezone (e.g., -0400)
+ `%:z`   | +hh:mm numeric timezone (e.g., -04:00)
+ `%::z`  | +hh:mm:ss numeric time zone (e.g., -04:00:00)
+ `%:::z` | numeric time zone with : to necessary precision (e.g., -04, +05:30)
+ `%Z`    | alphabetic time zone abbreviation (e.g., EDT)
 
 
 Keyboard

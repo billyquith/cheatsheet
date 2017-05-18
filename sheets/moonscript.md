@@ -6,7 +6,7 @@ Introduction
 
 ### About
 
-* These notes are for Moonscript version: 0.4.0
+* These notes are for Moonscript version: 0.5.0
 * [Website](http://moonscript.org)
 * [License](http://moonscript.org/reference/#license-mit) is MIT.
 * [Language reference](http://moonscript.org/reference/)
@@ -217,7 +217,7 @@ thing_copy = {k,v for k,v in pairs thing}       -- copy the table
 numbers = {1,2,3,4}
 sqrts = {i, math.sqrt i for i in *numbers}      -- use value iterator
 
-tuples = {{"hello", "world"}, {"foo", "bar"}}
+tuples = { {"hello", "world"}, {"foo", "bar"} }
 tbl = {unpack tuple for tuple in *tuples}       -- key,value pairs
 ```
 
@@ -338,7 +338,7 @@ else
 print message -- prints: I am very tall
 ```
 
-With assignment:
+With *assignment*:
 
 ```moon
 if user = database.find_user "moon"     -- 'user' assigned and then tested
@@ -526,7 +526,7 @@ assert b.__class == BackPack    -- check class type
 Where:
 
 * `new` is the constructor.
-* Use *fat arrow* when calling instance methods to handle the creation of a `self` argument, like `:` in Lua.
+* Use *fat arrow* `=>` when calling instance methods to handle the creation of a `self` argument, like `:` in Lua.
 * `@` prefix on variable is shorthand for `self.. @items` becomes `self.items`.
 * `\` operator is used to pass `self` to instance method.
 * Each class instance carries its type using `__class`.
