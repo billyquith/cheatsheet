@@ -120,6 +120,11 @@ function foo() {
 
 ```
 
+Input
+------
+
+#### read
+
 
 Output
 ------
