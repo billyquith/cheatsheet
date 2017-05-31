@@ -230,27 +230,45 @@ Variables
 
 #### Arguments
 
-- `$1-$N` :: Stores the arguments (variables) that were passed to the shell program from the command line.
-- `$?`    :: Stores the exit value of the last command that was executed.
 - `$0`    :: Stores the first word of the entered command (the name of the shell program).
+- `$1-$N` :: Stores the arguments (variables) that were passed to the shell program from the command line.
 - `$*`    :: Stores all the arguments that were entered on the command line `($1 $2 ...)`.
 - `"$@"`  :: Stores all the arguments that were entered on the command line, individually quoted ("$1" "$2" ...).
+- `$?`    :: Stores the exit value of the last command that was executed.
 
-#### Shell Parameter Expansion
+#### Defaults
 
-- `${parameter:-word}` :: If parameter is unset or null, the expansion of word is substituted. Otherwise, the value of parameter is substituted. <note ref="spe1"/>
-- `${parameter:=word}` :: If parameter is unset or null, the expansion of word is assigned to parameter. The value of parameter is then substituted. Positional parameters and special parameters may not be assigned to in this way.
-- `${parameter:?word}` :: If parameter is null or unset, the expansion of word (or a message to that effect if word is not present) is written to the standard error and the shell, if it is not interactive, exits. Otherwise, the value of parameter is substituted.
-- `${parameter:+word}` :: If parameter is null or unset, nothing is substituted, otherwise the expansion of word is substituted.
+- `${PARAM:-WORD}` :: If PARAM is unset or null, the expansion of WORD is substituted. Otherwise, the value of PARAM is substituted. <note ref="spe1"/>
+- `${PARAM:=WORD}` :: If PARAM is unset or null, the expansion of WORD is assigned to PARAM. The value of PARAM is then substituted. Positional parameters and special parameters may not be assigned to in this way.
+- `${PARAM:?WORD}` :: If PARAM is null or unset, the expansion of WORD (or a message to that effect if WORD is not present) is written to the standard error and the shell, if it is not interactive, exits. Otherwise, the value of PARAM is substituted.
+- `${PARAM:+WORD}` :: If PARAM is null or unset, nothing is substituted, otherwise the expansion of WORD is substituted.
 
-#### Substrings
+#### Slicing
 
-- `${parameter:offset}`         :: All characters after offset.
-- `${parameter:offset:length}`  :: All characters after offset for length.
+- `${PARAM:OFFSET}`         :: All characters after OFFSET. Note: -ve OFFSET is from end.
+- `${PARAM:OFFSET:LENGTH}`  :: Slice characters after OFFSET for LENGTH.
+- `${@:OFFSET}`             :: `@` = use positional parameters. OFFSET from start.
+- `${@:OFFSET:LENGTH}`      :: Slice parameters from OFFSET for LENGTH.
 
-#### Useful 
+#### Counting
 
-* `SCRIPTPATH=$( cd $(dirname $0) ; pwd -P )` - Path of current script.
+- `${#PARAM}`               :: Length of PARAM in chars.
+
+#### Substitution
+
+- `${PARAM/PATTERN/STRING}` :: Longest match of PATTERN is replaced with STRING. Pattern: `#` = PARAM start. @,* apply to positional params.
+- `${PARAM#WORD}`           :: WORD is pattern ('?','*' wildcards). Shortest matching pattern deleted from string start.
+- `${PARAM##WORD}`          :: As above, but longest matching pattern deleted from string start.
+- `${PARAM%WORD}`           :: WORD is pattern ('?','*' wildcards). Shortest matching pattern deleted from string end.
+- `${PARAM%%WORD}`          :: As above, but longest matching pattern deleted from string end.
+- `${PARAM^PATTERN}`        :: Modify case of PARAM where pattern matched. Make upper case first char.
+- `${PARAM^^PATTERN}`       :: As above. Make upper case all char.
+- `${PARAM,PATTERN}`        :: As above. Make lower case first char.
+- `${PARAM,,PATTERN}`       :: As above. Make lower case all chars.
+
+### Useful
+
+* `SCRIPTPATH=$(cd $(dirname $0); pwd -P)` - Path of current script.
 
 #### set
 
