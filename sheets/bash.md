@@ -145,6 +145,18 @@ read -p "prompt> " VAR
 echo ${VAR:-"Nothing entered"}
 ```
 
+#### getopts
+
+```bash
+while getopts "a:b" options; do
+  case "${options}" in
+  a) A=${OPTARG} ;;
+  b) echo "B" ;;
+  :) echo "Option ${OPTARG} expects an argument" && exit 2 ;;
+  *) echo "Unknown option" && exit 2 ;;
+  esac
+done
+```
 
 Output
 ------
